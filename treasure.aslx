@@ -1,0 +1,19 @@
+<!--Saved by Quest 5.8.6836.13983-->
+<asl version="580">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="Treasure of Nelfport">
+    <gameid>9719d085-2a63-430a-b367-52418fdb0d20</gameid>
+    <version>1.0</version>
+    <firstpublished>2023</firstpublished>
+    <showmoney type="boolean">false</showmoney>
+  </game>
+  <object name="room">
+    <inherit name="editor_room" />
+    <isroom />
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+    </object>
+  </object>
+</asl>
