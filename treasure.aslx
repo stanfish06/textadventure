@@ -194,6 +194,14 @@
     <exit alias="southeast" to="Small plaza south">
       <inherit name="southeastdirection" />
     </exit>
+    <exit alias="enter the laundry shop" to="Laundry shop">
+      <inherit name="indirection" />
+    </exit>
+    <object name="Poster 3">
+      <inherit name="editor_object" />
+      <alias>poster</alias>
+      <look>It's a poster about the loundry shop: "Leave all the dirty tasks to us and enjoy your day!"</look>
+    </object>
   </object>
   <object name="Small plaza east">
     <inherit name="editor_room" />
@@ -209,6 +217,16 @@
     <exit alias="southwest" to="Small plaza south">
       <inherit name="southwestdirection" />
     </exit>
+    <object name="Poster 1">
+      <inherit name="editor_object" />
+      <alias>poster</alias>
+      <look>It is an army recruitment poster: "Be the gardian of Nelfport."</look>
+    </object>
+    <object name="Poster 2">
+      <inherit name="editor_object" />
+      <look>It's a poster about this plaza: "Sunny sqaure, where sunshine and happiness stay."</look>
+      <alias>poster</alias>
+    </object>
   </object>
   <object name="Small plaza south">
     <inherit name="editor_room" />
@@ -608,6 +626,19 @@
     <pattern>give id</pattern>
     <defaultexpression>"You can't give id " + object.article + "."</defaultexpression>
   </verb>
+  <object name="Laundry shop">
+    <inherit name="editor_room" />
+    <alias>Kati's Laundry Room</alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="outside" to="Small plaza west">
+      <inherit name="outdirection" />
+    </exit>
+    <object name="Loundry shop owner">
+      <inherit name="editor_object" />
+      <alias>Kati</alias>
+      <look>A very friendly laundry shop owner.</look>
+    </object>
+  </object>
   <function name="random_move" parameters="agent"><![CDATA[
     position = agent.parent
     d = NewStringDictionary()
