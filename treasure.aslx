@@ -8,12 +8,643 @@
     <firstpublished>2023</firstpublished>
     <showmoney type="boolean">false</showmoney>
   </game>
-  <object name="room">
+  <object name="Small village outside Nelfport">
     <inherit name="editor_room" />
     <isroom />
+    <alias>Small village outside Nelfport</alias>
+    <exit alias="north" to="South gate of Nelfport">
+      <inherit name="northdirection" />
+    </exit>
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
     </object>
   </object>
+  <object name="South gate of Nelfport">
+    <inherit name="editor_room" />
+    <alias>White Gate</alias>
+    <exit alias="south" to="Small village outside Nelfport">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="northwest path" to="Small plaza east">
+      <inherit name="northwestdirection" />
+    </exit>
+  </object>
+  <object name="south harborside">
+    <inherit name="editor_room" />
+    <alias>south harborside</alias>
+    <exit alias="east" to="Street from harborside to the major city square">
+      <inherit name="eastdirection" />
+      <suffix>street</suffix>
+    </exit>
+    <exit alias="north" to="north harborside">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="south" to="Small plaza north">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
+  <object name="Street from harborside to the major city square">
+    <inherit name="editor_room" />
+    <alias>Seaport street</alias>
+    <exit alias="west" to="south harborside">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="Major square west">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="Major square west">
+    <inherit name="editor_room" />
+    <alias>west side of the city square</alias>
+    <exit alias="west" to="Street from harborside to the major city square">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="south" to="Major square southwest">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="north" to="Major square northwest">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="east" to="Major square center">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="northeast" to="Major square north">
+      <inherit name="northeastdirection" />
+    </exit>
+    <exit alias="southeast" to="Major square south">
+      <inherit name="southeastdirection" />
+    </exit>
+    <object name="Normal person8">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <isopen type="boolean">false</isopen>
+      <open type="boolean">false</open>
+      <object name="bag8">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="Bridge to the lighthouse">
+    <inherit name="editor_room" />
+    <alias>Beacon bridge</alias>
+  </object>
+  <object name="Lighthouse">
+    <inherit name="editor_room" />
+    <alias>Guardian lighthouse</alias>
+  </object>
+  <object name="Industrial area">
+    <inherit name="editor_room" />
+    <exit name="Iron bridge north" alias="bridge" to="north harborside">
+      <inherit name="southdirection" />
+      <prefix>Iron</prefix>
+    </exit>
+  </object>
+  <object name="north harborside">
+    <inherit name="editor_room" />
+    <alias>north harborside</alias>
+    <exit alias="south" to="south harborside">
+      <inherit name="southdirection" />
+    </exit>
+    <exit name="Iron bridge south" alias="bridge" to="Industrial area">
+      <inherit name="northdirection" />
+      <runscript type="boolean">false</runscript>
+      <prefix>Iron</prefix>
+    </exit>
+  </object>
+  <object name="Small plaza north">
+    <inherit name="editor_room" />
+    <exit alias="south" to="Small plaza center">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="north" to="south harborside">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="southwest" to="Small plaza west">
+      <inherit name="southwestdirection" />
+    </exit>
+    <exit alias="southeast" to="Small plaza east">
+      <inherit name="southeastdirection" />
+    </exit>
+  </object>
+  <object name="Small plaza west">
+    <inherit name="editor_room" />
+    <exit alias="east" to="Small plaza center">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="northeast" to="Small plaza north">
+      <inherit name="northeastdirection" />
+    </exit>
+    <exit alias="southeast" to="Small plaza south">
+      <inherit name="southeastdirection" />
+    </exit>
+  </object>
+  <object name="Small plaza east">
+    <inherit name="editor_room" />
+    <exit alias="southeast" to="South gate of Nelfport">
+      <inherit name="southeastdirection" />
+    </exit>
+    <exit alias="west" to="Small plaza center">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="northwest" to="Small plaza north">
+      <inherit name="northwestdirection" />
+    </exit>
+    <exit alias="southwest" to="Small plaza south">
+      <inherit name="southwestdirection" />
+    </exit>
+  </object>
+  <object name="Small plaza south">
+    <inherit name="editor_room" />
+    <exit alias="north" to="Small plaza center">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="northwest" to="Small plaza west">
+      <inherit name="northwestdirection" />
+    </exit>
+    <exit alias="northeast" to="Small plaza east">
+      <inherit name="northeastdirection" />
+    </exit>
+  </object>
+  <object name="Small plaza center">
+    <inherit name="editor_room" />
+    <exit alias="east" to="Small plaza east">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Small plaza west">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="north" to="Small plaza north">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="south" to="Small plaza south">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
+  <object name="Major square center">
+    <inherit name="editor_room" />
+    <alias>center of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="west" to="Major square west">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="northwest" to="Major square northwest">
+      <inherit name="northwestdirection" />
+    </exit>
+    <exit alias="north" to="Major square north">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="northeast" to="Major square northeast">
+      <inherit name="northeastdirection" />
+    </exit>
+    <exit alias="east" to="Major square east">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="southwest" to="Major square southwest">
+      <inherit name="southwestdirection" />
+    </exit>
+    <exit alias="south" to="Major square south">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="southeast" to="Major square southeast">
+      <inherit name="southeastdirection" />
+    </exit>
+    <object name="Normal person1">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="female" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <open type="boolean">false</open>
+      <isopen type="boolean">false</isopen>
+      <object name="bag1">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="Major square east">
+    <inherit name="editor_room" />
+    <alias>east side of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="west" to="Major square center">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="northwest" to="Major square north">
+      <inherit name="northwestdirection" />
+    </exit>
+    <exit alias="southwest" to="Major square south">
+      <inherit name="southwestdirection" />
+    </exit>
+    <exit alias="north" to="Major square northeast">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="south" to="Major square southeast">
+      <inherit name="southdirection" />
+    </exit>
+    <object name="Normal person2">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="male" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <open type="boolean">false</open>
+      <isopen type="boolean">false</isopen>
+      <object name="bag2">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="Major square north">
+    <inherit name="editor_room" />
+    <alias>north side of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="southwest" to="Major square west">
+      <inherit name="southwestdirection" />
+    </exit>
+    <exit alias="south" to="Major square center">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="southeast" to="Major square east">
+      <inherit name="southeastdirection" />
+    </exit>
+    <exit alias="west" to="Major square northwest">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="Major square northeast">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="north" to="Street from main square to the beach">
+      <inherit name="northdirection" />
+    </exit>
+    <object name="Normal person3">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="female" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <open type="boolean">false</open>
+      <isopen type="boolean">false</isopen>
+      <object name="bag3">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="Major square south">
+    <inherit name="editor_room" />
+    <alias>south side of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="northwest" to="Major square west">
+      <inherit name="northwestdirection" />
+    </exit>
+    <exit alias="north" to="Major square center">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="northeast" to="Major square east">
+      <inherit name="northeastdirection" />
+    </exit>
+    <exit alias="east" to="Major square southeast">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Major square southwest">
+      <inherit name="westdirection" />
+    </exit>
+    <object name="Normal person4">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <object name="bag4">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="Major square northwest">
+    <inherit name="editor_room" />
+    <alias>northwest side of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="south" to="Major square west">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="southeast" to="Major square center">
+      <inherit name="southeastdirection" />
+    </exit>
+    <exit alias="east" to="Major square north">
+      <inherit name="eastdirection" />
+    </exit>
+    <object name="Normal person5">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="female" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <open type="boolean">false</open>
+      <isopen type="boolean">false</isopen>
+      <object name="bag5">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="Major square northeast">
+    <inherit name="editor_room" />
+    <alias>northeast side of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="southwest" to="Major square center">
+      <inherit name="southwestdirection" />
+    </exit>
+    <exit alias="south" to="Major square east">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="west" to="Major square north">
+      <inherit name="westdirection" />
+    </exit>
+    <object name="Shady dude">
+      <inherit name="editor_object" />
+      <speak type="script">
+        firsttime {
+          msg ("Look for the suspicious people around this square.")
+          set (Thief, "startSteal", true)
+        }
+        otherwise {
+          msg ("Did you find any suspicious people?")
+        }
+      </speak>
+    </object>
+    <object name="Normal person6">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="male" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <isopen type="boolean">false</isopen>
+      <open type="boolean">false</open>
+      <object name="bag6">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="Major square southwest">
+    <inherit name="editor_room" />
+    <alias>southwest side of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="north" to="Major square west">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="northeast" to="Major square center">
+      <inherit name="northeastdirection" />
+    </exit>
+    <exit alias="east" to="Major square south">
+      <inherit name="eastdirection" />
+    </exit>
+    <object name="Thief">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="male" />
+      <identity>thief</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+    </object>
+  </object>
+  <object name="Major square southeast">
+    <inherit name="editor_room" />
+    <alias>southeast of the city sqaure </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <exit alias="northwest" to="Major square center">
+      <inherit name="northwestdirection" />
+    </exit>
+    <exit alias="north" to="Major square east">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="west" to="Major square south">
+      <inherit name="westdirection" />
+    </exit>
+    <object name="Normal person7">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="male" />
+      <identity>normal</identity>
+      <startSteal type="boolean">false</startSteal>
+      <feature_container />
+      <attr name="time_until_steal" type="int">2</attr>
+      <look type="script">
+        random_move (this)
+      </look>
+      <alias>person</alias>
+      <isopen type="boolean">false</isopen>
+      <open type="boolean">false</open>
+      <object name="bag7">
+        <inherit name="editor_object" />
+        <alias>small bag</alias>
+      </object>
+    </object>
+  </object>
+  <object name="east beach">
+    <inherit name="editor_room" />
+    <exit alias="west" to="west beach">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="east rocky shore">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="west beach">
+    <inherit name="editor_room" />
+    <exit alias="south" to="beach entrance">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="east" to="east beach">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="east rocky shore">
+    <inherit name="editor_room" />
+    <isroom type="boolean">false</isroom>
+    <exit alias="west" to="east beach">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="in" to="east cave">
+      <inherit name="indirection" />
+    </exit>
+  </object>
+  <object name="Street from main square to the beach">
+    <inherit name="editor_room" />
+    <alias>Coast street</alias>
+    <exit alias="north" to="beach entrance">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="south" to="Major square north">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
+  <object name="beach entrance">
+    <inherit name="editor_room" />
+    <exit alias="south" to="Street from main square to the beach">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="north" to="west beach">
+      <inherit name="northdirection" />
+    </exit>
+  </object>
+  <object name="east cave">
+    <inherit name="editor_room" />
+    <exit alias="out" to="east rocky shore">
+      <inherit name="outdirection" />
+    </exit>
+  </object>
+  <verb>
+    <property>catch</property>
+    <pattern>catch</pattern>
+    <defaultexpression>"You can't catch " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>focus</property>
+    <pattern>focus</pattern>
+    <defaultexpression>"You can't follow " + object.article + "."</defaultexpression>
+  </verb>
+  <function name="random_move" parameters="agent"><![CDATA[
+    position = agent.parent
+    d = NewStringDictionary()
+    dictionary add (d, "1", "Major square northwest")
+    dictionary add (d, "2", "Major square north")
+    dictionary add (d, "3", "Major square northeast")
+    dictionary add (d, "4", "Major square west")
+    dictionary add (d, "5", "Major square center")
+    dictionary add (d, "6", "Major square east")
+    dictionary add (d, "7", "Major square southwest")
+    dictionary add (d, "8", "Major square south")
+    dictionary add (d, "9", "Major square southeast")
+    if (agent.identity = "thief" and agent.startSteal = True) {
+      people = GetDirectChildren(position)
+      stop = False
+      foreach (individual, people) {
+        if (stop = False) {
+          if (individual.name <> agent.name) {
+            if (agent.time_until_steal = 0) {
+              item = PickOneChild(individual)
+              if (item <> null) {
+                item_name = GetAttribute (item, "alias")
+                if (item_name = "small bag") {
+                  msg (agent.gender + " approaches the person near him.")
+                  MoveObject (item, agent)
+                  msg (agent.gender + " steals a small bag from " + individual.possessive + " pocket.")
+                  set (item, "alias", "stolen small bag")
+                  set (agent, "alias", "Thief")
+                  set (individual, "alias", "Owner of the lost small bag")
+                  stop = True
+                }
+              }
+            }
+            else {
+              q = GetRandomDouble ()
+              if (q < 0.9) {
+                i = GetRandomInt(1,9)
+                target_position = DictionaryItem (d, toString(i))
+                MoveObject (agent, GetObject(target_position))
+                if (target_position = position.name) {
+                  msg (agent.alias + " doesn't move")
+                }
+                else {
+                  msg (agent.alias + " moves to " + GetAttribute (GetObject(target_position), "alias"))
+                }
+              }
+              else {
+                msg (agent.alias + " doesn't move")
+              }
+              agent.time_until_steal = agent.time_until_steal - 1
+              stop = True
+            }
+          }
+          else {
+            q = GetRandomDouble ()
+            if (q < 0.9) {
+              i = GetRandomInt(1,9)
+              target_position = DictionaryItem (d, toString(i))
+              MoveObject (agent, GetObject(target_position))
+              if (target_position = position.name) {
+                msg (agent.alias + " doesn't move")
+              }
+              else {
+                msg (agent.alias + " moves to " + GetAttribute (GetObject(target_position), "alias"))
+              }
+            }
+            else {
+              msg (agent.alias + " doesn't move")
+            }
+          }
+        }
+      }
+    }
+    else {
+      q = GetRandomDouble ()
+      if ((agent.identity = "thief" and q < 0.9) or (agent.identity = "normal" and q < 0.1)) {
+        i = GetRandomInt(1,9)
+        target_position = DictionaryItem (d, toString(i))
+        MoveObject (agent, GetObject(target_position))
+        if (target_position = position.name) {
+          msg (agent.alias + " doesn't move")
+        }
+        else {
+          msg (agent.alias + " moves to " + GetAttribute (GetObject(target_position), "alias"))
+        }
+      }
+      else {
+        msg (agent.alias + " doesn't move")
+      }
+    }
+  ]]></function>
 </asl>
