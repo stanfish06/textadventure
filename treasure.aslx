@@ -6,7 +6,8 @@
     <gameid>9719d085-2a63-430a-b367-52418fdb0d20</gameid>
     <version>1.0</version>
     <firstpublished>2023</firstpublished>
-    <showmoney type="boolean">false</showmoney>
+    <showmoney />
+    <feature_asktell />
   </game>
   <object name="Home">
     <inherit name="editor_room" />
@@ -103,21 +104,6 @@
       <displayverbs type="stringlist">
         <value>Look at</value>
       </displayverbs>
-    </object>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <object name="id">
-        <inherit name="editor_object" />
-        <feature_usegive />
-        <givesingle />
-        <giveto type="scriptdictionary">
-          <item key="Guard">
-            msg ("here you go")
-          </item>
-        </giveto>
-      </object>
     </object>
     <exit alias="out" to="Village Path">
       <inherit name="outdirection" />
@@ -220,6 +206,10 @@
     </exit>
     <exit alias="east" to="Major square west">
       <inherit name="eastdirection" />
+    </exit>
+    <exit name="Small alley entrance" alias="small alley entrance" to="Small alley">
+      <inherit name="southdirection" />
+      <visible type="boolean">false</visible>
     </exit>
   </object>
   <object name="Major square west">
@@ -532,6 +522,9 @@
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
       <alias>person</alias>
+      <open type="boolean">false</open>
+      <isopen type="boolean">false</isopen>
+      <close />
       <look type="script">
         random_move (this)
       </look>
@@ -642,7 +635,19 @@
       <attr name="time_until_steal" type="int">2</attr>
       <alias>person</alias>
       <look type="script">
-        random_move (this)
+        if (this.parent = GetObject("Street from harborside to the major city square")) {
+          MakeExitVisible (Small alley entrance)
+          MoveObject (Thief, Small alley)
+          msg ("Thief stops at the middle of the Seaport street and enters a small alley between two buildings.")
+          msg ("You can enter the " + CommandLink("go small alley entrance", "small alley") + " now.")
+        }
+        else if (this.parent = GetObject("Small alley")) {
+          MoveObject (Thief, Thief home)
+          msg ("Thief enters the house at the end of the alley.")
+        }
+        else {
+          random_move (this)
+        }
       </look>
     </object>
   </object>
@@ -760,6 +765,93 @@
       <look>A very friendly laundry shop owner.</look>
     </object>
   </object>
+  <object name="Small alley">
+    <inherit name="editor_room" />
+    <alias>small alley</alias>
+    <description>You can see a house at the end of the alley.</description>
+    <exit alias="north" to="Street from harborside to the major city square">
+      <inherit name="northdirection" />
+    </exit>
+    <exit name="Thief house door" alias="in" to="Thief home">
+      <inherit name="indirection" />
+      <locked type="boolean">false</locked>
+      <lockmessage>The door is locked</lockmessage>
+      <runscript />
+      <script type="script">
+        Ask ("Knock the door?") {
+          if (result) {
+            msg ("Someone comes close to the door and looks on you through the small hole on the door.")
+            Ask ("Talk to him?") {
+              if (result) {
+                response_q1 = NewList()
+                list add (response_q1, CommandLink("tell Door keeper about kade", "Kade, a treasure hunter."))
+                list add (response_q1, CommandLink("tell Door keeper about hunter", "A treasure hunter."))
+                list add (response_q1, CommandLink("tell Door keeper about nothing", "You don't have to know that."))
+                list add (response_q1, CommandLink("ask Door keeper about this house", "Is this the house for local thieves?"))
+                MakeObjectVisible (Door keeper)
+                PrintCentered ("\"Who is this?\"")
+                DisplayList (response_q1, true)
+              }
+              else {
+                msg ("You walk away.")
+              }
+            }
+          }
+        }
+      </script>
+    </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <object name="id">
+        <inherit name="editor_object" />
+        <feature_usegive />
+        <givesingle />
+        <giveto type="scriptdictionary">
+          <item key="Guard">
+            msg ("here you go")
+          </item>
+        </giveto>
+      </object>
+    </object>
+    <object name="Door keeper">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <tell type="scriptdictionary">
+        <item key="kade">
+          PrintCentered ("\"Kade. How do we know if you are really a hunter or not? We don't want any strangers in. Especially the cops.\"")
+          response_q2 = NewList()
+          list add (response_q2, CommandLink("tell Door keeper about what you saw at the city square", "I saw one of your guys stole a small bag at the city square, and I saw him entering this door. If I'm a cop, I would have catched him already."))
+          DisplayList (response_q2, true)
+        </item>
+        <item key="hunter">
+          PrintCentered ("\"A hunter. Emmm, or a guard pretending to be a hunter. How do I know if you are telling the truth or not?\"")
+        </item>
+        <item key="nothing">
+          PrintCentered ("\"Then we won't open the door. Walk away stranger.\"")
+        </item>
+        <item key="what you saw at the city square">
+          PrintCentered ("\"Or maybe you just want to wait and catach us all in one shot?\"")
+        </item>
+      </tell>
+      <visible type="boolean">false</visible>
+      <scenery />
+      <ask type="scriptdictionary">
+        <item key="this house">
+          PrintCentered ("\"I don't know what you are talking about. Walk away now!\"")
+        </item>
+      </ask>
+    </object>
+  </object>
+  <object name="Thief home">
+    <inherit name="editor_room" />
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>thief's house</alias>
+    <exit alias="out" to="Small alley">
+      <inherit name="outdirection" />
+    </exit>
+  </object>
   <function name="random_move" parameters="agent"><![CDATA[
     position = agent.parent
     d = NewStringDictionary()
@@ -790,6 +882,13 @@
                   set (agent, "alias", "Thief")
                   set (individual, "alias", "Owner of the lost small bag")
                   stop = True
+                  MoveObject (Thief, Street from harborside to the major city square)
+                  msg ("Thief moves west and enters the Seaport street connecting the harborside and the main square")
+                  Ask ("Follow " + agent.article + "?") {
+                    if (result) {
+                      MoveObject (GetObject("player"), GetObject("Street from harborside to the major city square"))
+                    }
+                  }
                 }
               }
             }
