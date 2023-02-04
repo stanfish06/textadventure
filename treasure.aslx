@@ -8,6 +8,139 @@
     <firstpublished>2023</firstpublished>
     <showmoney type="boolean">false</showmoney>
   </game>
+  <object name="Home">
+    <inherit name="editor_room" />
+    <object name="Kitchen Table">
+      <inherit name="editor_object" />
+      <inherit name="surface" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <feature_container />
+      <listchildren />
+      <listchildrenprefix>On it is</listchildrenprefix>
+      <hidechildren />
+      <look>Your table with some stuff you've left out from before.</look>
+      <object name="Twine">
+        <inherit name="editor_object" />
+        <inherit name="wearable" />
+        <look>A strong thick rope, useful for binding things together.</look>
+        <feature_usegive />
+        <feature_wearable />
+        <wear_slots type="stringlist">
+          <value>Head</value>
+        </wear_slots>
+        <wearmsg>You look stupid, but alright.</wearmsg>
+        <removemsg>Let's leave fashion to the professionals.</removemsg>
+        <use type="boolean">false</use>
+        <alias>Piece of Twine</alias>
+        <take />
+        <drop type="boolean">false</drop>
+      </object>
+      <object name="Cup">
+        <inherit name="editor_object" />
+        <look>A glass cup for drinking. I wonder what else I could use this for...</look>
+        <displayverbs type="stringlist">
+          <value>Look at</value>
+          <value>Take</value>
+        </displayverbs>
+        <take type="script">
+          msg ("You go to pick it up but fumble it and drop it as your hand leaves the table. It shatters into a millions pieces.")
+          msg ("You see that what once was the handle is now sharp where it used to connect to the cup, making for a useful blade.")
+          AddToInventory (Handle Blade)
+          MakeObjectVisible (Handle Blade)
+          MakeObjectInvisible (Cup)
+        </take>
+      </object>
+      <object name="Handle Blade">
+        <inherit name="editor_object" />
+        <drop type="boolean">false</drop>
+        <displayverbs type="stringlist">
+          <value>Look at</value>
+        </displayverbs>
+        <visible type="boolean">false</visible>
+        <look>What used to be a little ol' cup, but reborn with new purpose.</look>
+        <feature_usegive />
+        <use type="boolean">false</use>
+      </object>
+    </object>
+    <object name="Cupboard">
+      <inherit name="editor_object" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <look>Shelves for your food and utensils.</look>
+    </object>
+    <object name="Backyard Shed">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <isroom />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <attr name="feature_container" type="boolean">false</attr>
+      <look type="script">
+        OutputTextNoBr ("You go to step outside and search your shed for something that migt be useful, but as you do, you hear a cackling laugh... You skip over the shed and go around it, to see lights coming from the forest behind your house, and a weird smell accompanying the lights. As you approach, she calls out to you by name... \"Kade... yesss... come closer, I have something to tell you,\" says the witch. \"In your future I see the city of Nelport and its busy markets and merchants. One merchant in particular, one who sells leather and hides, one that owes me a favor...\" \"Now I know you're going to be busy when you reach Nelport, but couldn't help a poor old soul? Just give this potion to the man who sells leather in the markets, and I'll pay you once I know it's done, hmmmmm...?\"")
+        AddToInventory (Witchs Brew)
+        MakeObjectInvisible (Backyard Shed)
+      </look>
+      <object name="Witchs Brew">
+        <inherit name="editor_object" />
+        <scenery />
+        <alias>Witch's Brew</alias>
+        <drop />
+        <feature_usegive />
+      </object>
+    </object>
+    <object name="Broom Closet">
+      <inherit name="editor_object" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+    </object>
+    <object name="Drawers">
+      <inherit name="editor_object" />
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <object name="id">
+        <inherit name="editor_object" />
+        <feature_usegive />
+        <givesingle />
+        <giveto type="scriptdictionary">
+          <item key="Guard">
+            msg ("here you go")
+          </item>
+        </giveto>
+      </object>
+    </object>
+    <exit alias="out" to="Village Path">
+      <inherit name="outdirection" />
+    </exit>
+  </object>
+  <object name="Dark Forest">
+    <inherit name="editor_room" />
+    <exit alias="north" to="Village Path">
+      <inherit name="northdirection" />
+    </exit>
+  </object>
+  <object name="Village Path">
+    <inherit name="editor_room" />
+    <exit alias="north" to="Small village outside Nelfport">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="in" to="Home">
+      <inherit name="indirection" />
+    </exit>
+    <exit alias="south" to="Dark Forest">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
   <object name="Small village outside Nelfport">
     <inherit name="editor_room" />
     <isroom />
@@ -16,21 +149,9 @@
     <exit alias="north" to="South gate of Nelfport">
       <inherit name="northdirection" />
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <object name="id">
-        <inherit name="editor_object" />
-        <feature_usegive />
-        <giveto type="scriptdictionary">
-          <item key="Guard">
-            msg ("here you go")
-          </item>
-        </giveto>
-        <givesingle />
-      </object>
-    </object>
+    <exit alias="south" to="Village Path">
+      <inherit name="southdirection" />
+    </exit>
   </object>
   <object name="South gate of Nelfport">
     <inherit name="editor_room" />
@@ -49,6 +170,18 @@
       <inherit name="container_open" />
       <alias>Guard</alias>
       <look>A strong fully-armored guard</look>
+      <take type="boolean">false</take>
+      <feature_usegive />
+      <feature_container />
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <isopen type="boolean">false</isopen>
+      <transparent />
+      <attr name="feature_switchable" type="boolean">false</attr>
+      <attr name="feature_edible" type="boolean">false</attr>
+      <attr name="feature_wearable" type="boolean">false</attr>
+      <attr name="feature_startscript" type="boolean">false</attr>
+      <attr name="feature_player" type="boolean">false</attr>
       <speak type="script">
         msg ("Welcome to Nelfport, the biggest harbor city in this country. Before I let you in, you need to show me your id. ")
         Ask ("Give id to guard?") {
@@ -63,18 +196,6 @@
           }
         }
       </speak>
-      <take type="boolean">false</take>
-      <feature_usegive />
-      <feature_container />
-      <open type="boolean">false</open>
-      <close type="boolean">false</close>
-      <isopen type="boolean">false</isopen>
-      <transparent />
-      <attr name="feature_switchable" type="boolean">false</attr>
-      <attr name="feature_edible" type="boolean">false</attr>
-      <attr name="feature_wearable" type="boolean">false</attr>
-      <attr name="feature_startscript" type="boolean">false</attr>
-      <attr name="feature_player" type="boolean">false</attr>
     </object>
   </object>
   <object name="south harborside">
