@@ -6,7 +6,8 @@
     <gameid>9719d085-2a63-430a-b367-52418fdb0d20</gameid>
     <version>1.0</version>
     <firstpublished>2023</firstpublished>
-    <showmoney type="boolean">false</showmoney>
+    <showmoney />
+    <feature_asktell />
     <category>Fantasy</category>
   </game>
   <object name="Home">
@@ -40,6 +41,7 @@
         <alias>Piece of Twine</alias>
         <take />
         <drop type="boolean">false</drop>
+        <usemenuprompt type="string"></usemenuprompt>
         <selfuseon type="scriptdictionary">
           <item key="Timber">
             AddToInventory (Repair Equipment)
@@ -49,7 +51,6 @@
             msg ("You've made Repair Equipment")
           </item>
         </selfuseon>
-        <usemenuprompt type="string"></usemenuprompt>
       </object>
       <object name="Cup">
         <inherit name="editor_object" />
@@ -143,6 +144,12 @@
         <take />
         <drop type="boolean">false</drop>
         <feature_usegive />
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+          <value>Use</value>
+        </inventoryverbs>
+        <use />
+        <usemenuprompt type="string"></usemenuprompt>
         <selfuseon type="scriptdictionary">
           <item key="Old Tree">
             MakeObjectInvisible (Old Tree)
@@ -151,12 +158,6 @@
             RemoveObject (Hatchet)
           </item>
         </selfuseon>
-        <inventoryverbs type="stringlist">
-          <value>Look at</value>
-          <value>Use</value>
-        </inventoryverbs>
-        <use />
-        <usemenuprompt type="string"></usemenuprompt>
       </object>
     </object>
     <object name="Drawers">
@@ -175,18 +176,20 @@
       <lockmessage type="string"></lockmessage>
       <keycount type="int">1</keycount>
       <key type="object">Nightstand Key</key>
+      <onunlock type="script">
+        RemoveObject (Nightstand Key)
+      </onunlock>
       <object name="id">
         <inherit name="editor_object" />
         <feature_usegive />
         <givesingle />
+        <take />
+        <drop type="boolean">false</drop>
         <giveto type="scriptdictionary">
           <item key="Guard">
             msg ("here you go")
           </item>
         </giveto>
-        <take />
-        <drop type="boolean">false</drop>
-        <look>You identification with the local kingdom and villages: necessary for travel.</look>
       </object>
     </object>
     <exit alias="out" to="Village Path">
@@ -217,12 +220,13 @@
       <visible type="boolean">false</visible>
       <drop type="boolean">false</drop>
       <feature_usegive />
+      <use />
       <selfuseon type="scriptdictionary">
         <item key="Carriage">
           MakeExitVisible (Road to Village outside Nelfport)
+          RemoveObject (Carriage Parts)
         </item>
       </selfuseon>
-      <use />
     </object>
     <object name="player">
       <inherit name="editor_object" />
@@ -292,6 +296,11 @@
     <exit alias="south" to="Small village outside Nelfport">
       <inherit name="southdirection" />
     </exit>
+    <exit name="entry path" alias="northwest path" to="Small plaza east">
+      <inherit name="northwestdirection" />
+      <locked type="boolean">false</locked>
+      <visible type="boolean">false</visible>
+    </exit>
     <object name="Guard">
       <inherit name="editor_object" />
       <inherit name="male" />
@@ -327,10 +336,6 @@
         }
       </speak>
     </object>
-    <exit name="Gate to Small Plaza" alias="northwest" to="Small plaza east">
-      <inherit name="northwestdirection" />
-      <visible type="boolean">false</visible>
-    </exit>
     <object name="Crank Handle">
       <inherit name="editor_object" />
       <visible type="boolean">false</visible>
@@ -343,16 +348,6 @@
   <object name="south harborside">
     <inherit name="editor_room" />
     <alias>south harborside</alias>
-    <exit alias="east" to="Street from harborside to the major city square">
-      <inherit name="eastdirection" />
-      <suffix>street</suffix>
-    </exit>
-    <exit alias="north" to="north harborside">
-      <inherit name="northdirection" />
-    </exit>
-    <exit alias="south" to="Small plaza north">
-      <inherit name="southdirection" />
-    </exit>
     <object name="Unruly Kids">
       <inherit name="editor_object" />
       <inherit name="maleplural" />
@@ -370,6 +365,16 @@
         }
       </speak>
     </object>
+    <exit alias="east" to="Street from harborside to the major city square">
+      <inherit name="eastdirection" />
+      <suffix>street</suffix>
+    </exit>
+    <exit alias="north" to="north harborside">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="south" to="Small plaza north">
+      <inherit name="southdirection" />
+    </exit>
   </object>
   <object name="Street from harborside to the major city square">
     <inherit name="editor_room" />
@@ -379,6 +384,10 @@
     </exit>
     <exit alias="east" to="Major square west">
       <inherit name="eastdirection" />
+    </exit>
+    <exit name="Small alley entrance" alias="small alley entrance" to="Small alley">
+      <inherit name="southdirection" />
+      <visible type="boolean">false</visible>
     </exit>
   </object>
   <object name="Major square west">
@@ -405,13 +414,15 @@
     <object name="Normal person8">
       <inherit name="editor_object" />
       <inherit name="container_open" />
+      <inherit name="male" />
       <identity>normal</identity>
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a nice waistcoat and a white shirt</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -445,6 +456,7 @@
         <value>Speak to</value>
       </displayverbs>
       <drop type="boolean">false</drop>
+      <look>A gruffy old man with a thick accent when he speaks, but he looks like he knows his way around the industrial sector.</look>
       <speak type="script">
         firsttime {
           msg ("Hey there stranger, heard someone was planning on going out there to try and get the treasure sometime. Folks in the back office have been talking about the travel paper requests, we don't see those too often... Hey, I've got this old diving helmet that I think you could use if you're going down underwater any time soon. Trouble is, it's strung up in my warehouse and I'm missing a crank to lower the pulley. I think I'd seen some kids running off with it earlier, but if you could get it back, the helmet's all your's.")
@@ -452,20 +464,19 @@
         }
         otherwise {
           msg ("If you can get that crank from them kids, I'll go grab that helmet from the warehouse for ya.")
-          msg ("*He returns and gives you the helmet*")
         }
         if (Got(Crank Handle)) {
           Ask ("Give Crank Handle to Robert?") {
             if (result) {
               MoveObject (Crank Handle, Robert)
               msg ("Shucks, thanks stranger. With this now, I can go get that helmet for ya... be right back.")
+              msg ("*He returns and gives you the helmet*")
               AddToInventory (Diving Helmet)
               MakeObjectVisible (Diving Helmet)
             }
           }
         }
       </speak>
-      <look>A gruffy old man with a thick accent when he speaks, but he looks like he knows his way around the industrial sector.</look>
     </object>
     <object name="Diving Helmet">
       <inherit name="editor_object" />
@@ -500,9 +511,108 @@
     <exit alias="southeast" to="Small plaza east">
       <inherit name="southeastdirection" />
     </exit>
+    <object name="Letter man">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <inherit name="container_open" />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <look>This man is searching through his surroundings. He checks his pockets, looks underneath, and scan the nearby areas. You can see frustration in his eyes.</look>
+      <alias>anxious young man</alias>
+      <prefix>an</prefix>
+      <feature_container />
+      <isopen type="boolean">false</isopen>
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <attr name="problem_stated" type="boolean">false</attr>
+      <speak type="script">
+        if (GetBoolean(GetObject("Letter man"), "problem_stated")) {
+          Ask ("Have you found my watch?") {
+            if (result) {
+              if (Got(pendant watch)) {
+                MoveObject (pendant watch, Letter man)
+                msg ("\"Yesss! This is my watch. Where did you find it?\"")
+                msg (CommandLink ("tell Sam about the watch", "I found it in the haystack."))
+              }
+              else {
+                msg ("You don't have the watch.")
+              }
+            }
+          }
+        }
+        else {
+          msg (CommandLink ("ask anxious young man about his problem", "Hey, what is going on? Are you looking for something?"))
+        }
+      </speak>
+      <ask type="scriptdictionary">
+        <item key="his problem">
+          msg ("\"I lost my pendant watch. This watch is really important to me. Can you help me find it?\"")
+          Ask ("Help him?") {
+            if (result) {
+              msg (CommandLink("tell anxious young man about the decision", "Sure! When and where did you see your watch last time?"))
+            }
+          }
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="the decision">
+          msg ("\"Thank you sir! By the way, you can call me Sam.\"")
+          set (Letter man, "alias", "Sam")
+          set (Letter man, "prefix", "")
+          msg ("\"I was drunk last night, and I remember that I wandered to this plaza with some friends.\"")
+          msg ("\"I also remember that I pulled out my watch to check the time at this plaza.\"")
+          msg ("\"After checking the time, I went back home and slept.\"")
+          msg ("\"When I woke up this morning, I coudn't find my watch anywhere in my house.\"")
+          msg (CommandLink("tell Sam about the response", "Ok! I'll look around and see if I can find it at this plaza."))
+        </item>
+        <item key="the response">
+          msg ("\"Let me know if you find it! I appreciate your help.\"")
+          set (Letter man, "problem_stated", True)
+        </item>
+        <item key="the watch">
+          msg ("\"Ohhh right! I laid on the haystack last night because I'm so drunk. The watch was dropped at that time.\"")
+          msg ("\"You are so good at finding things. What do you do for living?\"")
+          msg (CommandLink ("tell Sam about treasure hunter", "I'm a treasure hunter."))
+        </item>
+        <item key="treasure hunter">
+          msg ("\"That's why! Why are you here?\"")
+          msg (CommandLink ("tell Sam about treasure", "I'm looking for the treasure of Nelfport. Any ideas about who I should talk to here?"))
+        </item>
+        <item key="treasure">
+          msg ("\"Emmm...I think there is a person who knows a lot about these things.\"")
+          msg ("\"This watch was given by a woman named bloodraven when I was an orphan, and she helped me find a new family.\"")
+          msg ("\"Not long ago, I heard that she might be at Nelfport, so I came here and tried to find her to thank her for helping me before.\"")
+          msg ("\"I spoke to many people here. Most of them have no idea about her, but some of them seemed to be too scared to talk about her.\"")
+          msg ("\"Finally, a beggar told me that she controls the dark side of this city, and she got a broad network in this city.\"")
+          msg (CommandLink ("tell Sam about thief", "She is probably in charge of some illegal activities. You should probably find the thieves in this city and ask them about her."))
+        </item>
+        <item key="thief">
+          msg ("\"Exactly! You know a lot. I did try to find the thieves, but I'm not good at these things. You have keen eyes. You should be able to find the thieves!\"")
+          msg ("\"The theives of this city usually steal things at the main city square. The city square is easy to find: go north, enter the south harborside, enter the Seaport street, and go east. \"")
+          msg (CommandLink ("tell Sam about leaving", "I'll find her and ask her about the treasures. Anything you want me to tell or give her?"))
+        </item>
+        <item key="leaving">
+          msg ("\"Great! I believe you will find her. Please take this letter with you and give it to her.\"")
+          MoveObject (letter to bloodraven, player)
+          msg ("\"See you then. Hope you can find what you want.\"")
+          RemoveObject (Letter man)
+        </item>
+      </tell>
+      <object name="letter to bloodraven">
+        <inherit name="editor_object" />
+        <feature_usegive />
+        <give type="scriptdictionary">
+          <item key="pendant watch">
+            msg ("thank you")
+          </item>
+        </give>
+      </object>
+    </object>
   </object>
   <object name="Small plaza west">
     <inherit name="editor_room" />
+    <description>There is a small laundry shop.</description>
+    <enter type="script">
+    </enter>
     <exit alias="east" to="Small plaza center">
       <inherit name="eastdirection" />
     </exit>
@@ -518,7 +628,7 @@
     <object name="Poster 3">
       <inherit name="editor_object" />
       <alias>poster</alias>
-      <look>It's a poster about the loundry shop: "Leave all the dirty tasks to us and enjoy your day!"</look>
+      <look><![CDATA[It's a poster about the loundry shop.<br/>First line: "Leave all the dirty tasks to us and enjoy your day!"<br/>Second line: "Paied jobs available!"]]></look>
     </object>
   </object>
   <object name="Small plaza east">
@@ -545,6 +655,32 @@
       <look>It's a poster about this plaza: "Sunny sqaure, where sunshine and happiness stay."</look>
       <alias>poster</alias>
     </object>
+    <object name="Barrel 1">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <alias>barrel</alias>
+      <feature_container />
+      <isopen type="boolean">false</isopen>
+      <close />
+      <listchildren />
+      <object name="Rusty ax">
+        <inherit name="editor_object" />
+        <take />
+        <alias>rusty ax</alias>
+      </object>
+    </object>
+    <object name="Barrel 2">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <feature_container />
+      <listchildren />
+      <alias>barrel</alias>
+      <object name="Fishing rod">
+        <inherit name="editor_object" />
+        <take />
+        <alias>fishing rod</alias>
+      </object>
+    </object>
   </object>
   <object name="Small plaza south">
     <inherit name="editor_room" />
@@ -557,6 +693,20 @@
     <exit alias="northeast" to="Small plaza east">
       <inherit name="northeastdirection" />
     </exit>
+    <object name="Haystack">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <feature_container />
+      <close />
+      <isopen type="boolean">false</isopen>
+      <listchildren />
+      <onopen type="script">
+      </onopen>
+      <object name="pendant watch">
+        <inherit name="editor_object" />
+        <take />
+      </object>
+    </object>
   </object>
   <object name="Small plaza center">
     <inherit name="editor_room" />
@@ -572,6 +722,57 @@
     <exit alias="south" to="Small plaza south">
       <inherit name="southdirection" />
     </exit>
+    <object name="Fountain">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <feature_container />
+      <listchildren />
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <isopen />
+      <hidechildren />
+      <transparent />
+      <object name="Gold coin 1">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 2">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 3">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 4">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 5">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+    </object>
   </object>
   <object name="Major square center">
     <inherit name="editor_room" />
@@ -609,9 +810,10 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>woman with a elegant gown and a fur wrap</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -648,9 +850,10 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a brown suit and a monocle</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -690,9 +893,10 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>woman with a nice custom-made coat and a hat</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -724,11 +928,16 @@
     <object name="Normal person4">
       <inherit name="editor_object" />
       <inherit name="container_open" />
+      <inherit name="male" />
       <identity>normal</identity>
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a black suit and a silver-topped cane </alias>
+      <open type="boolean">false</open>
+      <isopen type="boolean">false</isopen>
+      <close />
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -759,9 +968,10 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>woman with a silk blouse and a pearl necklace</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -804,9 +1014,10 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a fur-lined overcoat and a top hat</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -837,9 +1048,25 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a black jacket and a black hat</alias>
       <look type="script">
-        random_move (this)
+        if (this.parent = GetObject("Street from harborside to the major city square")) {
+          MakeExitVisible (Small alley entrance)
+          MoveObject (Thief, Small alley)
+          msg ("Thief stops at the middle of the Seaport street and enters a small alley between two buildings.")
+          msg ("You can enter the " + CommandLink("go small alley entrance", "small alley") + " now.")
+        }
+        else if (this.parent = GetObject("Small alley")) {
+          MoveObject (Thief, Thief home)
+          msg ("Thief enters the house at the end of the alley.")
+          UnlockExit (Thief house door)
+          msg ("You can investigate this " +  CommandLink("go house", "house") + " now")
+        }
+        else if (this.parent = GetObject("Thief home")) {
+        }
+        else {
+          random_move (this)
+        }
       </look>
     </object>
   </object>
@@ -864,9 +1091,10 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>men with a black suit and a tobacco pipe</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
@@ -928,6 +1156,137 @@
     <exit alias="out" to="east rocky shore">
       <inherit name="outdirection" />
     </exit>
+    <object name="Locked wood box">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="container_lockable" />
+      <feature_container />
+      <keycount type="int">1</keycount>
+      <nokeymessage>You do not have the lockpick.</nokeymessage>
+      <locked type="boolean">false</locked>
+      <isopen type="boolean">false</isopen>
+      <key type="object">Lockpick</key>
+      <object name="Gold coin 6">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 7">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 8">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 9">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 10">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 11">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 12">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 13">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 14">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 15">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 16">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 17">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 18">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 19">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 20">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+    </object>
   </object>
   <verb>
     <property>catch</property>
@@ -957,6 +1316,132 @@
       <look>A very friendly laundry shop owner.</look>
     </object>
   </object>
+  <object name="Small alley">
+    <inherit name="editor_room" />
+    <alias>small alley</alias>
+    <description>You can see a house at the end of the alley.</description>
+    <exit alias="north" to="Street from harborside to the major city square">
+      <inherit name="northdirection" />
+    </exit>
+    <exit name="Thief house door" alias="house" to="Thief home">
+      <inherit name="indirection" />
+      <lockmessage>You should wait until this thief gets into the house.</lockmessage>
+      <runscript />
+      <visible />
+      <locked />
+      <script type="script">
+        if (Door keeper.know_kade = False) {
+          Ask ("Knock the door?") {
+            if (result) {
+              msg ("Someone comes close to the door and looks on you through the small hole on the door.")
+              Ask ("Talk to this person?") {
+                if (result) {
+                  response_q1 = NewList()
+                  list add (response_q1, CommandLink("tell Door keeper about kade", "Kade, a treasure hunter."))
+                  list add (response_q1, CommandLink("tell Door keeper about nothing", "You don't have to know that."))
+                  list add (response_q1, CommandLink("ask Door keeper about this house", "Is this the house for local thieves?"))
+                  MakeObjectVisible (Door keeper)
+                  PrintCentered ("\"Who is this?\"")
+                  DisplayList (response_q1, true)
+                }
+                else {
+                  msg ("You walk away.")
+                }
+              }
+            }
+          }
+        }
+        else {
+          MoveObject (player, Thief home)
+        }
+      </script>
+    </exit>
+    <object name="Door keeper">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <visible type="boolean">false</visible>
+      <scenery />
+      <attr name="know_kade" type="boolean">false</attr>
+      <tell type="scriptdictionary">
+        <item key="kade">
+          PrintCentered ("\"Kade. How do we know if you are really a hunter or not? We don't want any strangers in. Especially the cops.\"")
+          response_q2 = NewList()
+          list add (response_q2, CommandLink("tell Door keeper about what you saw at the city square", "I saw one of your guys stole a small bag at the city square, and I saw him entering this door. If I'm a cop, I would have catched him already."))
+          DisplayList (response_q2, true)
+        </item>
+        <item key="money">
+          OutputTextNoBr ("\"Five coins? You think I'm a begger? Give me 20 coins or leave this place right now.\"")
+          Ask ("Give 20 coins?") {
+          }
+        </item>
+        <item key="nothing">
+          PrintCentered ("\"Then I won't open the door.\"")
+        </item>
+        <item key="what you saw at the city square">
+          PrintCentered ("\"Or maybe you just want to wait and catach us all in one shot?\"")
+          response_q3 = NewList()
+          list add (response_q3, CommandLink("tell Door keeper about money", "Hey listen. If you let me in, I will give you 5 coins."))
+          list add (response_q3, CommandLink("tell Door keeper about the leader of the Thieves Guild", "I'm not a local. Besides, I know the name of your leader."))
+          DisplayList (response_q3, true)
+        </item>
+        <item key="the leader of the Thieves Guild">
+          PrintCentered ("\"Really? Tell me the name.\"")
+          msg ("Write your response after this line:")
+          get input {
+            if (result = "Bloodraven") {
+              PrintCentered ("HaHaHa...Well, this is not her real name, but this is his code name.")
+              PrintCentered ("How did you know his name?")
+              msg (CommandLink("tell Door keeper about the letter", "I helped a guy named Sam to find his pendant watch that bloodraven gave him when he was an orphan, and he wanted me to give this letter to bloodraven."))
+            }
+            else {
+              PrintCentered ("This is not his name. You are lying. Walk away now!")
+            }
+          }
+        </item>
+        <item key="the letter">
+          msg ("The girl behind the door unlocks the door and lets Kade go in.")
+          MoveObject (player, Thief home)
+          msg ("\"People in this house were all orphans helped by Eileen Snyder. She sometimes brings orphans here and teaches them how to steal to survive. In most of the times, she helps orphans find a new home. Sam is the latter case.\"")
+          msg ("\"My name is Camila. My parents were workers at Nelfport, and they both died because their boss asked them to do dangerous tasks. That evil guy is dead now, but I still hate those rich basterds. So, I chose to become a thief, and Eileen taught me how to survive.\"")
+          set (Door keeper, "alias", "Camila")
+          MoveObject (Door keeper, Thief home)
+          msg ("\"The guy you saw in the market is Johny. You can talk to him if you want, but he is not very nice to unfamilar people.\"")
+          msg ("\"You can find Eileen upstairs. Talk to me later if you want quick money.\"")
+          set (Door keeper, "know_kade", True)
+          set (Thief, "alias", "Johny")
+        </item>
+      </tell>
+      <ask type="scriptdictionary">
+        <item key="this house">
+          PrintCentered ("\"I don't know what you are talking about. Walk away.\"")
+        </item>
+      </ask>
+    </object>
+  </object>
+  <object name="Thief home">
+    <inherit name="editor_room" />
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>thief's house</alias>
+    <exit alias="out" to="Small alley">
+      <inherit name="outdirection" />
+    </exit>
+    <exit alias="up" to="Thief home second floor">
+      <inherit name="updirection" />
+    </exit>
+  </object>
+  <object name="Thief home second floor">
+    <inherit name="editor_room" />
+    <exit alias="down" to="Thief home">
+      <inherit name="downdirection" />
+    </exit>
+    <object name="Eileen Snyder">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <object name="Lockpick">
+        <inherit name="editor_object" />
+      </object>
+    </object>
+  </object>
   <function name="random_move" parameters="agent"><![CDATA[
     position = agent.parent
     d = NewStringDictionary()
@@ -980,13 +1465,22 @@
               if (item <> null) {
                 item_name = GetAttribute (item, "alias")
                 if (item_name = "small bag") {
+                  individual_name = individual.alias
                   msg (agent.gender + " approaches the person near him.")
                   MoveObject (item, agent)
                   msg (agent.gender + " steals a small bag from " + individual.possessive + " pocket.")
                   set (item, "alias", "stolen small bag")
                   set (agent, "alias", "Thief")
-                  set (individual, "alias", "Owner of the lost small bag")
+                  set (individual, "alias", individual_name + "(Owner of the lost small bag)")
+                  set (individual, "lost_small_bag", True)
                   stop = True
+                  MoveObject (Thief, Street from harborside to the major city square)
+                  msg ("Thief moves west and enters the Seaport street connecting the harborside and the main square")
+                  Ask ("Follow " + agent.article + "?") {
+                    if (result) {
+                      MoveObject (GetObject("player"), GetObject("Street from harborside to the major city square"))
+                    }
+                  }
                 }
               }
             }
@@ -1048,12 +1542,17 @@
       }
     }
   ]]></function>
+  <function name="pick_up_gold_coin" parameters="gold_coin">
+    RemoveObject (gold_coin)
+    IncreaseMoney (1)
+  </function>
   <timer name="fivesec">
     <interval>5</interval>
     <script>
       msg ("You may pass through now. Here is your id. ")
       MoveObject (id, player)
-      MakeExitVisible (Gate to Small Plaza)
+      MakeExitVisible (entry path)
+      msg (CommandLink("go northwest path", "walk down the northwest path"))
       DisableTimer (fivesec)
     </script>
   </timer>
