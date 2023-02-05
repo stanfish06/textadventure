@@ -126,6 +126,21 @@
     <exit alias="south" to="Dark Forest">
       <inherit name="southdirection" />
     </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <object name="id">
+        <inherit name="editor_object" />
+        <feature_usegive />
+        <givesingle />
+        <giveto type="scriptdictionary">
+          <item key="Guard">
+            msg ("here you go")
+          </item>
+        </giveto>
+      </object>
+    </object>
   </object>
   <object name="Small village outside Nelfport">
     <inherit name="editor_room" />
@@ -236,16 +251,18 @@
     <object name="Normal person8">
       <inherit name="editor_object" />
       <inherit name="container_open" />
+      <inherit name="male" />
       <identity>normal</identity>
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a nice waistcoat and a white shirt</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag8">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -402,12 +419,13 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>woman with a elegant gown and a fur wrap</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag1">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -441,12 +459,13 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a brown suit and a monocle</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag2">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -483,12 +502,13 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>woman with a nice custom-made coat and a hat</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag3">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -517,17 +537,19 @@
     <object name="Normal person4">
       <inherit name="editor_object" />
       <inherit name="container_open" />
+      <inherit name="male" />
       <identity>normal</identity>
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a black suit and a silver-topped cane </alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <close />
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag4">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -555,12 +577,13 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>woman with a silk blouse and a pearl necklace</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag5">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -600,12 +623,13 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a fur-lined overcoat and a top hat</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag6">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -633,7 +657,7 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>man with a black jacket and a black hat</alias>
       <look type="script">
         if (this.parent = GetObject("Street from harborside to the major city square")) {
           MakeExitVisible (Small alley entrance)
@@ -644,6 +668,10 @@
         else if (this.parent = GetObject("Small alley")) {
           MoveObject (Thief, Thief home)
           msg ("Thief enters the house at the end of the alley.")
+          UnlockExit (Thief house door)
+          msg ("You can investigate this " +  CommandLink("go house", "house") + " now")
+        }
+        else if (this.parent = GetObject("Thief home")) {
         }
         else {
           random_move (this)
@@ -672,12 +700,13 @@
       <startSteal type="boolean">false</startSteal>
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
-      <alias>person</alias>
+      <alias>men with a black suit and a tobacco pipe</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
       <look type="script">
         random_move (this)
       </look>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag7">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -772,52 +801,44 @@
     <exit alias="north" to="Street from harborside to the major city square">
       <inherit name="northdirection" />
     </exit>
-    <exit name="Thief house door" alias="in" to="Thief home">
+    <exit name="Thief house door" alias="house" to="Thief home">
       <inherit name="indirection" />
-      <locked type="boolean">false</locked>
-      <lockmessage>The door is locked</lockmessage>
+      <lockmessage>You should wait until this thief gets into the house.</lockmessage>
       <runscript />
       <script type="script">
-        Ask ("Knock the door?") {
-          if (result) {
-            msg ("Someone comes close to the door and looks on you through the small hole on the door.")
-            Ask ("Talk to him?") {
-              if (result) {
-                response_q1 = NewList()
-                list add (response_q1, CommandLink("tell Door keeper about kade", "Kade, a treasure hunter."))
-                list add (response_q1, CommandLink("tell Door keeper about hunter", "A treasure hunter."))
-                list add (response_q1, CommandLink("tell Door keeper about nothing", "You don't have to know that."))
-                list add (response_q1, CommandLink("ask Door keeper about this house", "Is this the house for local thieves?"))
-                MakeObjectVisible (Door keeper)
-                PrintCentered ("\"Who is this?\"")
-                DisplayList (response_q1, true)
-              }
-              else {
-                msg ("You walk away.")
+        if (Door keeper.know_kade = False) {
+          Ask ("Knock the door?") {
+            if (result) {
+              msg ("Someone comes close to the door and looks on you through the small hole on the door.")
+              Ask ("Talk to this person?") {
+                if (result) {
+                  response_q1 = NewList()
+                  list add (response_q1, CommandLink("tell Door keeper about kade", "Kade, a treasure hunter."))
+                  list add (response_q1, CommandLink("tell Door keeper about nothing", "You don't have to know that."))
+                  list add (response_q1, CommandLink("ask Door keeper about this house", "Is this the house for local thieves?"))
+                  MakeObjectVisible (Door keeper)
+                  PrintCentered ("\"Who is this?\"")
+                  DisplayList (response_q1, true)
+                }
+                else {
+                  msg ("You walk away.")
+                }
               }
             }
           }
         }
+        else {
+          MoveObject (player, Thief home)
+        }
       </script>
+      <visible />
+      <locked />
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <object name="id">
-        <inherit name="editor_object" />
-        <feature_usegive />
-        <givesingle />
-        <giveto type="scriptdictionary">
-          <item key="Guard">
-            msg ("here you go")
-          </item>
-        </giveto>
-      </object>
-    </object>
     <object name="Door keeper">
       <inherit name="editor_object" />
-      <inherit name="male" />
+      <inherit name="female" />
+      <visible type="boolean">false</visible>
+      <scenery />
       <tell type="scriptdictionary">
         <item key="kade">
           PrintCentered ("\"Kade. How do we know if you are really a hunter or not? We don't want any strangers in. Especially the cops.\"")
@@ -825,23 +846,54 @@
           list add (response_q2, CommandLink("tell Door keeper about what you saw at the city square", "I saw one of your guys stole a small bag at the city square, and I saw him entering this door. If I'm a cop, I would have catched him already."))
           DisplayList (response_q2, true)
         </item>
-        <item key="hunter">
-          PrintCentered ("\"A hunter. Emmm, or a guard pretending to be a hunter. How do I know if you are telling the truth or not?\"")
+        <item key="money">
+          OutputTextNoBr ("\"Five coins? You think I'm a begger? Give me 20 coins or leave this place right now.\"")
+          Ask ("Give 20 coins?") {
+          }
         </item>
         <item key="nothing">
-          PrintCentered ("\"Then we won't open the door. Walk away stranger.\"")
+          PrintCentered ("\"Then I won't open the door.\"")
         </item>
         <item key="what you saw at the city square">
           PrintCentered ("\"Or maybe you just want to wait and catach us all in one shot?\"")
+          response_q3 = NewList()
+          list add (response_q3, CommandLink("tell Door keeper about money", "Hey listen. If you let me in, I will give you 5 coins."))
+          list add (response_q3, CommandLink("tell Door keeper about the leader of the Thieves Guild", "I'm not a local. Besides, I know the name of your leader."))
+          DisplayList (response_q3, true)
+        </item>
+        <item key="the leader of the Thieves Guild">
+          PrintCentered ("\"Really? Tell me the name.\"")
+          msg ("Write your response after this line:")
+          get input {
+            if (result = "Bloodraven") {
+              PrintCentered ("HaHaHa...Well, this is not her real name, but this is his code name.")
+              PrintCentered ("How did you know his name?")
+              msg (CommandLink("tell Door keeper about the letter", "I helped a guy named Sam to find his pendant watch that bloodraven gave him when he was an orphan, and he wanted me to give this letter to bloodraven."))
+            }
+            else {
+              PrintCentered ("This is not his name. You are lying. Walk away now!")
+            }
+          }
+        </item>
+        <item key="the letter">
+          msg ("The girl behind the door unlocks the door and lets Kade go in.")
+          MoveObject (player, Thief home)
+          msg ("\"People in this house were all orphans helped by Eileen Snyder. She sometimes brings orphans here and teaches them how to steal to survive. In most of the times, she helps orphans find a new home. Sam is the latter case.\"")
+          msg ("\"My name is Camila. My parents were workers at Nelfport, and they both died because their boss asked them to do dangerous tasks. That evil guy is dead now, but I still hate those rich basterds. So, I chose to become a thief, and Eileen taught me how to survive.\"")
+          set (Door keeper, "alias", "Camila")
+          MoveObject (Door keeper, Thief home)
+          msg ("\"The guy you saw in the market is Johny. You can talk to him if you want, but he is not very nice to unfamilar people.\"")
+          msg ("\"You can find Eileen upstairs. Talk to me later if you want quick money.\"")
+          set (Door keeper, "know_kade", True)
+          set (Thief, "alias", "Johny")
         </item>
       </tell>
-      <visible type="boolean">false</visible>
-      <scenery />
       <ask type="scriptdictionary">
         <item key="this house">
-          PrintCentered ("\"I don't know what you are talking about. Walk away now!\"")
+          PrintCentered ("\"I don't know what you are talking about. Walk away.\"")
         </item>
       </ask>
+      <attr name="know_kade" type="boolean">false</attr>
     </object>
   </object>
   <object name="Thief home">
@@ -875,12 +927,14 @@
               if (item <> null) {
                 item_name = GetAttribute (item, "alias")
                 if (item_name = "small bag") {
+                  individual_name = individual.alias
                   msg (agent.gender + " approaches the person near him.")
                   MoveObject (item, agent)
                   msg (agent.gender + " steals a small bag from " + individual.possessive + " pocket.")
                   set (item, "alias", "stolen small bag")
                   set (agent, "alias", "Thief")
-                  set (individual, "alias", "Owner of the lost small bag")
+                  set (individual, "alias", individual_name + "(Owner of the lost small bag)")
+                  set (individual, "lost_small_bag", True)
                   stop = True
                   MoveObject (Thief, Street from harborside to the major city square)
                   msg ("Thief moves west and enters the Seaport street connecting the harborside and the main square")
