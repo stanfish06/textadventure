@@ -126,21 +126,6 @@
     <exit alias="south" to="Dark Forest">
       <inherit name="southdirection" />
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <object name="id">
-        <inherit name="editor_object" />
-        <feature_usegive />
-        <givesingle />
-        <giveto type="scriptdictionary">
-          <item key="Guard">
-            msg ("here you go")
-          </item>
-        </giveto>
-      </object>
-    </object>
   </object>
   <object name="Small village outside Nelfport">
     <inherit name="editor_room" />
@@ -259,10 +244,10 @@
       <alias>man with a nice waistcoat and a white shirt</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag8">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -310,9 +295,62 @@
     <exit alias="southeast" to="Small plaza east">
       <inherit name="southeastdirection" />
     </exit>
+    <object name="Letter man">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <look>This man is searching through his surroundings. He checks his pockets, looks underneath, and scan the nearby areas. You can see frustration in his eyes.</look>
+      <alias>anxious young man</alias>
+      <prefix>an</prefix>
+      <speak type="script">
+        msg (CommandLink ("ask anxious young man about his problem", "Hey, what is going on? Are you looking for something?"))
+      </speak>
+      <ask type="scriptdictionary">
+        <item key="his problem">
+          msg ("\"I lost my pendant watch. This watch is really important to me. Can you help me find it?\"")
+          Ask ("Help him?") {
+            if (result) {
+              msg (CommandLink("tell anxious young man about the decision", "Sure! When and where did you see your watch last time?"))
+            }
+          }
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="the decision">
+          msg ("\"Thank you sir! By the way, you can call me Sam.\"")
+          set (Letter man, "alias", "Sam")
+          msg ("\"I was drunk last night, and I remember that I wandered to this plaza with some friends.\"")
+          msg ("\"I also remember that I pulled out my watch to check the time at this plaza.\"")
+          msg ("\"After checking the time, I went back home and slept.\"")
+          msg ("\"When I woke up this morning, I coudn't find my watch anywhere in my house.\"")
+          msg (CommandLink("tell Sam about the response", "Ok! I'll look around and see if I can find it at this plaza."))
+        </item>
+        <item key="the response">
+          msg ("\"Let me know if you find it! I appreciate your help.\"")
+        </item>
+      </tell>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <object name="id">
+        <inherit name="editor_object" />
+        <feature_usegive />
+        <givesingle />
+        <giveto type="scriptdictionary">
+          <item key="Guard">
+            msg ("here you go")
+          </item>
+        </giveto>
+      </object>
+    </object>
   </object>
   <object name="Small plaza west">
     <inherit name="editor_room" />
+    <enter type="script">
+    </enter>
+    <description>There is a small laundry shop.</description>
     <exit alias="east" to="Small plaza center">
       <inherit name="eastdirection" />
     </exit>
@@ -328,7 +366,7 @@
     <object name="Poster 3">
       <inherit name="editor_object" />
       <alias>poster</alias>
-      <look>It's a poster about the loundry shop: "Leave all the dirty tasks to us and enjoy your day!"</look>
+      <look><![CDATA[It's a poster about the loundry shop.<br/>First line: "Leave all the dirty tasks to us and enjoy your day!"<br/>Second line: "Paied jobs available!"]]></look>
     </object>
   </object>
   <object name="Small plaza east">
@@ -355,6 +393,32 @@
       <look>It's a poster about this plaza: "Sunny sqaure, where sunshine and happiness stay."</look>
       <alias>poster</alias>
     </object>
+    <object name="Barrel 1">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <alias>barrel</alias>
+      <feature_container />
+      <isopen type="boolean">false</isopen>
+      <close />
+      <listchildren />
+      <object name="Rusty ax">
+        <inherit name="editor_object" />
+        <take />
+        <alias>rusty ax</alias>
+      </object>
+    </object>
+    <object name="Barrel 2">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <feature_container />
+      <listchildren />
+      <alias>barrel</alias>
+      <object name="Fishing rod">
+        <inherit name="editor_object" />
+        <take />
+        <alias>fishing rod</alias>
+      </object>
+    </object>
   </object>
   <object name="Small plaza south">
     <inherit name="editor_room" />
@@ -367,6 +431,20 @@
     <exit alias="northeast" to="Small plaza east">
       <inherit name="northeastdirection" />
     </exit>
+    <object name="Haystack">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <feature_container />
+      <close />
+      <isopen type="boolean">false</isopen>
+      <listchildren />
+      <onopen type="script">
+      </onopen>
+      <object name="pendant watch">
+        <inherit name="editor_object" />
+        <take />
+      </object>
+    </object>
   </object>
   <object name="Small plaza center">
     <inherit name="editor_room" />
@@ -382,6 +460,57 @@
     <exit alias="south" to="Small plaza south">
       <inherit name="southdirection" />
     </exit>
+    <object name="Fountain">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <feature_container />
+      <listchildren />
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <isopen />
+      <hidechildren />
+      <transparent />
+      <object name="Gold coin 1">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 2">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 3">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 4">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 5">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+    </object>
   </object>
   <object name="Major square center">
     <inherit name="editor_room" />
@@ -422,10 +551,10 @@
       <alias>woman with a elegant gown and a fur wrap</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag1">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -462,10 +591,10 @@
       <alias>man with a brown suit and a monocle</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag2">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -505,10 +634,10 @@
       <alias>woman with a nice custom-made coat and a hat</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag3">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -546,10 +675,10 @@
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <close />
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag4">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -580,10 +709,10 @@
       <alias>woman with a silk blouse and a pearl necklace</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag5">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -626,10 +755,10 @@
       <alias>man with a fur-lined overcoat and a top hat</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag6">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -703,10 +832,10 @@
       <alias>men with a black suit and a tobacco pipe</alias>
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
+      <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
         random_move (this)
       </look>
-      <attr name="lost_small_bag" type="boolean">false</attr>
       <object name="bag7">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -805,6 +934,8 @@
       <inherit name="indirection" />
       <lockmessage>You should wait until this thief gets into the house.</lockmessage>
       <runscript />
+      <visible />
+      <locked />
       <script type="script">
         if (Door keeper.know_kade = False) {
           Ask ("Knock the door?") {
@@ -831,14 +962,13 @@
           MoveObject (player, Thief home)
         }
       </script>
-      <visible />
-      <locked />
     </exit>
     <object name="Door keeper">
       <inherit name="editor_object" />
       <inherit name="female" />
       <visible type="boolean">false</visible>
       <scenery />
+      <attr name="know_kade" type="boolean">false</attr>
       <tell type="scriptdictionary">
         <item key="kade">
           PrintCentered ("\"Kade. How do we know if you are really a hunter or not? We don't want any strangers in. Especially the cops.\"")
@@ -893,7 +1023,6 @@
           PrintCentered ("\"I don't know what you are talking about. Walk away.\"")
         </item>
       </ask>
-      <attr name="know_kade" type="boolean">false</attr>
     </object>
   </object>
   <object name="Thief home">
@@ -1004,6 +1133,10 @@
       }
     }
   ]]></function>
+  <function name="pick_up_gold_coin" parameters="gold_coin">
+    RemoveObject (gold_coin)
+    IncreaseMoney (1)
+  </function>
   <timer name="fivesec">
     <interval>5</interval>
     <script>
