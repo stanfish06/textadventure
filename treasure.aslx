@@ -298,12 +298,29 @@
     <object name="Letter man">
       <inherit name="editor_object" />
       <inherit name="male" />
+      <inherit name="container_open" />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <look>This man is searching through his surroundings. He checks his pockets, looks underneath, and scan the nearby areas. You can see frustration in his eyes.</look>
       <alias>anxious young man</alias>
       <prefix>an</prefix>
       <speak type="script">
-        msg (CommandLink ("ask anxious young man about his problem", "Hey, what is going on? Are you looking for something?"))
+        if (GetBoolean(GetObject("Letter man"), "problem_stated")) {
+          Ask ("Have you found my watch?") {
+            if (result) {
+              if (Got(pendant watch)) {
+                MoveObject (pendant watch, Letter man)
+                msg ("\"Yesss! This is my watch. Where did you find it?\"")
+                msg (CommandLink ("tell Sam about the watch", "I found it in the haystack."))
+              }
+              else {
+                msg ("You don't have the watch.")
+              }
+            }
+          }
+        }
+        else {
+          msg (CommandLink ("ask anxious young man about his problem", "Hey, what is going on? Are you looking for something?"))
+        }
       </speak>
       <ask type="scriptdictionary">
         <item key="his problem">
@@ -319,6 +336,7 @@
         <item key="the decision">
           msg ("\"Thank you sir! By the way, you can call me Sam.\"")
           set (Letter man, "alias", "Sam")
+          set (Letter man, "prefix", "")
           msg ("\"I was drunk last night, and I remember that I wandered to this plaza with some friends.\"")
           msg ("\"I also remember that I pulled out my watch to check the time at this plaza.\"")
           msg ("\"After checking the time, I went back home and slept.\"")
@@ -327,8 +345,51 @@
         </item>
         <item key="the response">
           msg ("\"Let me know if you find it! I appreciate your help.\"")
+          set (Letter man, "problem_stated", True)
+        </item>
+        <item key="the watch">
+          msg ("\"Ohhh right! I laid on the haystack last night because I'm so drunk. The watch was dropped at that time.\"")
+          msg ("\"You are so good at finding things. What do you do for living?\"")
+          msg (CommandLink ("tell Sam about treasure hunter", "I'm a treasure hunter."))
+        </item>
+        <item key="treasure hunter">
+          msg ("\"That's why! Why are you here?\"")
+          msg (CommandLink ("tell Sam about treasure", "I'm looking for treasures at Nelfport. Any ideas about who I should talk to here?"))
+        </item>
+        <item key="treasure">
+          msg ("\"Emmm...I think there is a person who knows a lot about these things.\"")
+          msg ("\"This watch was given by a woman named bloodraven when I was an orphan, and she helped me find a new family.\"")
+          msg ("\"Not long ago, I heard that she might be at Nelfport, so I came here and tried to find her to thank her for helping me before.\"")
+          msg ("\"I spoke to many people here. Most of them have no idea about her, but some of them seemed to be too scared to talk about her.\"")
+          msg ("\"Finally, a beggar told me that she controls the dark side of this city, and she got a broad network in this city.\"")
+          msg (CommandLink ("tell Sam about thief", "She is probably in charge of some illegal activities. You should probably find the thieves in this city and ask them about her."))
+        </item>
+        <item key="thief">
+          msg ("\"Exactly! You know a lot. I did try to find the thieves, but I'm not good at these things. You have keen eyes. You should be able to find the thieves!\"")
+          msg ("\"The theives of this city usually steal things at the main city square. The city square is easy to find: go north, enter the south harborside, enter the Seaport street, and go east. \"")
+          msg (CommandLink ("tell Sam about leaving", "I'll find her and ask her about the treasures. Anything you want me to tell or give her?"))
+        </item>
+        <item key="leaving">
+          msg ("\"Great! I believe you will find her. Please take this letter with you and give it to her.\"")
+          MoveObject (letter to bloodraven, player)
+          msg ("\"See you then. Hope you can find what you want.\"")
+          RemoveObject (Letter man)
         </item>
       </tell>
+      <feature_container />
+      <isopen type="boolean">false</isopen>
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <attr name="problem_stated" type="boolean">false</attr>
+      <object name="letter to bloodraven">
+        <inherit name="editor_object" />
+        <feature_usegive />
+        <give type="scriptdictionary">
+          <item key="pendant watch">
+            msg ("thank you")
+          </item>
+        </give>
+      </object>
     </object>
     <object name="player">
       <inherit name="editor_object" />
