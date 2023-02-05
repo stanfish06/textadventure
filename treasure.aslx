@@ -965,6 +965,126 @@
       <nokeymessage>You do not have the lockpick.</nokeymessage>
       <locked type="boolean">false</locked>
       <isopen type="boolean">false</isopen>
+      <object name="Gold coin 6">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 7">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 8">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 9">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 10">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 11">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 12">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 13">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 14">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 15">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 16">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 17">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 18">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 19">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 20">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
     </object>
   </object>
   <verb>
