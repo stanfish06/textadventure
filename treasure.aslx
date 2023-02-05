@@ -9,6 +9,8 @@
     <showmoney />
     <feature_asktell />
     <category>Fantasy</category>
+    <subtitle>For ECSE 290</subtitle>
+    <author>Stan Yu, Andrew Kresic, Sarah Cheng, Bolurin Ojo</author>
   </game>
   <object name="Home">
     <inherit name="editor_room" />
