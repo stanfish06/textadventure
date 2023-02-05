@@ -354,7 +354,7 @@
         </item>
         <item key="treasure hunter">
           msg ("\"That's why! Why are you here?\"")
-          msg (CommandLink ("tell Sam about treasure", "I'm looking for treasures at Nelfport. Any ideas about who I should talk to here?"))
+          msg (CommandLink ("tell Sam about treasure", "I'm looking for the treasure of Nelfport. Any ideas about who I should talk to here?"))
         </item>
         <item key="treasure">
           msg ("\"Emmm...I think there is a person who knows a lot about these things.\"")
@@ -955,6 +955,17 @@
     <exit alias="out" to="east rocky shore">
       <inherit name="outdirection" />
     </exit>
+    <object name="Locked wood box">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="container_lockable" />
+      <feature_container />
+      <keycount type="int">1</keycount>
+      <key type="object">Lockpick</key>
+      <nokeymessage>You do not have the lockpick.</nokeymessage>
+      <locked type="boolean">false</locked>
+      <isopen type="boolean">false</isopen>
+    </object>
   </object>
   <verb>
     <property>catch</property>
@@ -1093,6 +1104,22 @@
     <exit alias="out" to="Small alley">
       <inherit name="outdirection" />
     </exit>
+    <exit alias="up" to="Thief home second floor">
+      <inherit name="updirection" />
+    </exit>
+  </object>
+  <object name="Thief home second floor">
+    <inherit name="editor_room" />
+    <exit alias="down" to="Thief home">
+      <inherit name="downdirection" />
+    </exit>
+    <object name="Eileen Snyder">
+      <inherit name="editor_object" />
+      <inherit name="female" />
+      <object name="Lockpick">
+        <inherit name="editor_object" />
+      </object>
+    </object>
   </object>
   <function name="random_move" parameters="agent"><![CDATA[
     position = agent.parent
