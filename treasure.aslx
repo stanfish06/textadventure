@@ -786,6 +786,7 @@
         <item key="leaving">
           msg ("\"Great! I believe you will find her. Please take this letter with you and give it to her.\"")
           MoveObject (letter to bloodraven, player)
+          PrintCentered ("\"Oh, and I forgot to mention. There is a shady dude on the northeast side of the city square. He was a detective before, and he knows some tricks to find out the thief!\"")
           msg ("\"See you then. Hope you can find what you want.\"")
           RemoveObject (Letter man)
         </item>
@@ -1151,8 +1152,9 @@
     <exit alias="east" to="Major square northeast">
       <inherit name="eastdirection" />
     </exit>
-    <exit alias="north" to="Street from main square to the beach">
+    <exit name="beach path" alias="north" to="Street from main square to the beach">
       <inherit name="northdirection" />
+      <visible type="boolean">false</visible>
     </exit>
     <object name="Normal person3">
       <inherit name="editor_object" />
@@ -2033,7 +2035,7 @@
           set (Door keeper, "alias", "Camila")
           MoveObject (Door keeper, Thief home)
           msg ("\"The guy you saw in the market is Johny. You can talk to him if you want, but he is not very nice to unfamilar people.\"")
-          msg ("\"You can find Eileen upstairs. Talk to me later if you want quick money.\"")
+          msg ("\"You can find Eileen upstairs.\"")
           set (Door keeper, "know_kade", True)
           set (Thief, "alias", "Johny")
         </item>
@@ -2070,6 +2072,72 @@
     <object name="Eileen Snyder">
       <inherit name="editor_object" />
       <inherit name="female" />
+      <alias>Eileen</alias>
+      <sean type="boolean">false</sean>
+      <speak type="script">
+        if (GetBoolean(GetObject("Eileen Snyder"), "sean") = False) {
+          PrintCentered ("\"Hello Mr. Hunter. What do you want from me?\"")
+          msg (CommandLink("ask Eileen about the identity", "How do you know I'm a treasure hunter?"))
+        }
+        else {
+          PrintCentered ("\"Have you found the treasure?\"")
+        }
+      </speak>
+      <ask type="scriptdictionary">
+        <item key="the identity">
+          PrintCentered ("\"I have seen a lot of people, so I can easily tell a person's occupation. Besides, I have a friend who was a treasure hunter before.\"")
+          PrintCentered ("\"So, what are you looking for here?\"")
+          msg (CommandLink("tell Eileen about the treasure", "I'm looking for the treasure of Nelfport. Any clue about that?"))
+        </item>
+        <item key="that person">
+          PrintCentered ("\"Why should I tell you his name and where he is?\"")
+          if (Got(letter to bloodraven)) {
+            msg (CommandLink("tell Eileen about the response", "I can share part of the treasure with you after finding it. As a treasure hunter, I really enjoy and feel passionate about finding mysterious treasures all around the world! Also, I helped one of the orphans you helped before. His name is Sam, and he wants me to give you this letter."))
+          }
+          else {
+            msg (CommandLink("tell Eileen about the response", "I can share part of the treasure with you after finding it. As a treasure hunter, I really enjoy and feel passionate about finding mysterious treasures all around the world!"))
+          }
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="the treasure">
+          PrintCentered ("\"Yes, I do. A lot of people tried to find it, but they all failed. I do know a person who knows something about it, and you should talk to him next.\"")
+          msg (CommandLink("ask Eileen about that person", "Who is that?"))
+        </item>
+        <item key="the response">
+          PrintCentered ("\"HaHaHa...You are such a simple and pure person. I'm not interested in money by the way, so you don't need to share that treasure with me.\"")
+          PrintCentered ("\"The name of that guy is Sean. He was a treasure hunter, and he is the lighthouse keeper now. The lighthouse is near the northest side of this city. After reaching the beach, keep going west, and you will see the lighthouse.\"")
+          if (Got(letter to bloodraven)) {
+            PrintCentered ("\"Sam...Right, I still remember him. Both of his parents died due to plague. I didn't bring him here because I could see that he is smart, and he doesn't have to be a thief in the future. So, I find a family for him. You said he wrote a letter for me? \"")
+            Ask ("Give her the letter?") {
+              if (result) {
+                msg ("Here is the letter!")
+                MoveObject (letter to bloodraven, Eileen Snyder)
+                PrintCentered ("\"Since you helped him, please take this lockpick. This can help you open many treasure cases. Very handy tool.\"")
+                MoveObject (Lockpick, player)
+                msg (CommandLink("tell Eileen about leaving", "Thanks. I'll go to the lighthouse and talk to Sean."))
+              }
+              else {
+                msg ("You have to give her the letter.")
+                msg ("Here is the letter!")
+                msg ("Here is the letter!")
+                MoveObject (letter to bloodraven, Eileen Snyder)
+                PrintCentered ("\"Since you helped him, please take this lockpick. This can help you open many treasure cases. Very handy tool.\"")
+                MoveObject (Lockpick, player)
+                msg (CommandLink("tell Eileen about leaving", "Thanks. I'll go to the lighthouse and talk to Sean."))
+              }
+            }
+          }
+          else {
+            msg (CommandLink("tell Eileen about leaving", "Thanks. I'll go to the lighthouse and talk to Sean."))
+          }
+          set (Eileen Snyder, "sean", true)
+          MakeExitVisible (beach path)
+        </item>
+        <item key="leaving">
+          PrintCentered ("\"Good luck!\"")
+        </item>
+      </tell>
       <object name="Lockpick">
         <inherit name="editor_object" />
       </object>
