@@ -464,7 +464,7 @@
     <exit alias="in" to="Lighthouse">
       <inherit name="indirection" />
     </exit>
-    <exit alias="east" to="east beach">
+    <exit alias="east" to="west beach">
       <inherit name="eastdirection" />
     </exit>
   </object>
@@ -475,38 +475,8 @@
       <inherit name="editor_object" />
       <inherit name="male" />
       <look>Hunched over a chair in the corner, you see an old man with his back turned to you. It's Sean Paulie, a former treasue huner. He might be able to give you some clues about finding you treasure.</look>
+      <usestandardverblist />
       <speak type="script">
-        firsttime {
-          msg ("What do you want?")
-          Ask ("Are you Sean?") {
-            msg ("Yes, who are you?")
-            Ask ("I'm Kade Bellman. Treasure Hunter from Hymia. ") {
-              msg ("What do you want?")
-              Ask ("I heard about a treasue hiding in some place at Nelfport, but nobody has found them yet") {
-                msg ("I do know some things that might aid you in your search. What's in it for me. ")
-                msg ("If you want my help you need some gold coins to exchange for information.")
-                Ask ("Where can I find these gold coins") {
-                  msg ("To find gold coins, you need to search all the differnt places you travel o. You may also be able to get them in return for helping others")
-                }
-              }
-            }
-          }
-        }
-        otherwise {
-          msg ("Do you have my coins?")
-          if (Got(Gold coin 1)) {
-            Ask ("Give coins to Sean") {
-              if (result) {
-                MoveObject (Gold coin 20, Sean)
-                msg ("Thanks. Now here's what I know about your tresure.")
-                msg ("Long ago, two ships loaded with gold and jewlery crashed in the middle of the sea, all all the treasure sunk into the water.")
-                msg ("Here is the map to the location of the shipwreak. ")
-                MakeObjectVisible (Chest)
-                AddToInventory (Chest)
-              }
-            }
-          }
-        }
         firsttime {
           msg ("What do you want?")
           Ask ("Are you Sean?") {
@@ -541,7 +511,6 @@
           }
         }
       </speak>
-      <usestandardverblist />
       <ask type="scriptdictionary">
         <item key="areSean">
           msg ("Yes I'm Sean, who's asking...")
@@ -558,18 +527,19 @@
         <look type="string"></look>
         <feature_container />
         <close type="boolean">false</close>
+        <visible type="boolean">false</visible>
+        <hidechildren />
+        <listchildren />
         <onopen type="script">
           MakeObjectVisible (Map)
           MakeObjectVisible (Key)
         </onopen>
-        <visible type="boolean">false</visible>
-        <hidechildren />
-        <listchildren />
         <object name="Map">
           <inherit name="editor_object" />
           <alias>Map</alias>
           <look>You see a map with a red X marked in the middle of the ocean.</look>
           <take />
+          <visible />
           <ontake type="script">
             AddToInventory (Map)
             if (Got(Diving Helmet)) {
@@ -580,17 +550,16 @@
               msg ("You are not ready to go to the Shipwreck yet. Try to find a diving helmet")
             }
           </ontake>
-          <visible />
         </object>
         <object name="Key">
           <inherit name="editor_object" />
           <look>An old metal key. It might come in useful later</look>
           <take />
           <takemsg>You took the key</takemsg>
+          <visible />
           <ontake type="script">
             AddToInventory (Key)
           </ontake>
-          <visible />
         </object>
       </object>
     </object>
@@ -601,6 +570,10 @@
       <inherit name="editor_object" />
       <inherit name="editor_player" />
       <feature_container />
+      <attr name="money_temp" type="int">0</attr>
+      <object name="Lockpick">
+        <inherit name="editor_object" />
+      </object>
     </object>
   </object>
   <object name="Industrial area">
@@ -1528,6 +1501,12 @@
       <feature_container />
       <attr name="time_until_steal" type="int">2</attr>
       <alias>man with a black jacket and a black hat</alias>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <isopen type="boolean">false</isopen>
       <look type="script">
         if (this.parent = GetObject("Street from harborside to the major city square")) {
           MakeExitVisible (Small alley entrance)
@@ -1547,12 +1526,6 @@
           random_move (this)
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
-      <open type="boolean">false</open>
-      <close type="boolean">false</close>
-      <isopen type="boolean">false</isopen>
     </object>
   </object>
   <object name="Major square southeast">
@@ -1655,12 +1628,17 @@
       <close type="boolean">false</close>
       <isopen type="boolean">false</isopen>
       <keycount type="int">1</keycount>
-      <key type="object">Rusty ax</key>
       <autounlock type="boolean">false</autounlock>
       <autoopen />
       <nokeymessage>You need an ax to open it.</nokeymessage>
       <unlockmessage>You chopped off the outer layer of the box.</unlockmessage>
       <lockmessage>Still not open yet.</lockmessage>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+        <value>Open</value>
+      </displayverbs>
+      <listchildren />
+      <key type="object">Rusty ax</key>
       <chop type="script">
         if (not this.locked) {
           msg (DynamicTemplate("AlreadyUnlocked", this))
@@ -1678,11 +1656,6 @@
           }
         }
       </chop>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-        <value>Open</value>
-      </displayverbs>
-      <listchildren />
       <object name="Gold coin 21">
         <inherit name="editor_object" />
         <alias>gold coin</alias>
@@ -1764,6 +1737,9 @@
         </ontake>
       </object>
     </object>
+    <exit alias="west" to="Bridge to the lighthouse">
+      <inherit name="westdirection" />
+    </exit>
   </object>
   <object name="east rocky shore">
     <inherit name="editor_room" />
@@ -1808,7 +1784,6 @@
       <nokeymessage>You do not have the lockpick.</nokeymessage>
       <locked />
       <isopen type="boolean">false</isopen>
-      <key type="object">Lockpick</key>
       <listchildren />
       <autounlock type="boolean">false</autounlock>
       <displayverbs type="stringlist">
@@ -1816,6 +1791,7 @@
         <value>Open</value>
         <value>unlock</value>
       </displayverbs>
+      <key type="object">Lockpick</key>
       <object name="Gold coin 6">
         <inherit name="editor_object" />
         <alias>gold coin</alias>
@@ -1937,15 +1913,6 @@
         </ontake>
       </object>
     </object>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <attr name="money_temp" type="int">0</attr>
-      <object name="Lockpick">
-        <inherit name="editor_object" />
-      </object>
-    </object>
   </object>
   <verb>
     <property>catch</property>
@@ -1974,6 +1941,14 @@
       <inherit name="female" />
       <alias>Kati</alias>
       <look>A very friendly laundry shop owner.</look>
+      <attr name="job_done" type="boolean">false</attr>
+      <speak type="script">
+        response = NewList()
+        list add (response, CommandLink("ask Kati about the job", "Is there job opportunity here?"))
+        list add (response, CommandLink("tell Kati about nothing", "I'm alright, just looking around."))
+        PrintCentered ("\"Hi! How can I help you today?\"")
+        DisplayList (response, true)
+      </speak>
       <ask type="scriptdictionary">
         <item key="the job">
           if (GetBoolean(GetObject("Laundry shop owner"), "job_done") = False) {
@@ -1990,19 +1965,11 @@
           }
         </item>
       </ask>
-      <speak type="script">
-        response = NewList()
-        list add (response, CommandLink("ask Kati about the job", "Is there job opportunity here?"))
-        list add (response, CommandLink("tell Kati about nothing", "I'm alright, just looking around."))
-        PrintCentered ("\"Hi! How can I help you today?\"")
-        DisplayList (response, true)
-      </speak>
       <tell type="scriptdictionary">
         <item key="nothing">
           PrintCentered ("\"You have a great day sir!\"")
         </item>
       </tell>
-      <attr name="job_done" type="boolean">false</attr>
     </object>
   </object>
   <object name="Small alley">
@@ -2145,16 +2112,16 @@
       <inherit name="container_lockable" />
       <feature_container />
       <keycount type="int">1</keycount>
-      <key type="object">Key</key>
       <autounlock type="boolean">false</autounlock>
       <lockmessage>Locked. you need a key</lockmessage>
+      <visible type="boolean">false</visible>
+      <close type="boolean">false</close>
+      <key type="object">Key</key>
       <onunlock type="script">
         PrintCentered ("Congradulations! You found the treasure.")
         msg ("After successfully finding the treasure, Kade Bellman loads all the treasue into his carriage and returns to Hymia")
         finish
       </onunlock>
-      <visible type="boolean">false</visible>
-      <close type="boolean">false</close>
     </object>
     <exit alias="north" to="Ocean">
       <inherit name="northdirection" />
