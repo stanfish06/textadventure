@@ -475,7 +475,7 @@
     <object name="Sean">
       <inherit name="editor_object" />
       <inherit name="male" />
-      <look>Hunched over a chair in the corner, you see an old man with his back turned to you. It's Sean Paulie, a former treasue huner. He might be able to give you some clues about finding you treasure.</look>
+      <look>Hunched over a chair in the corner, you see an old man with his back turned to you. It's Sean Paulie, a former treasue hunter. He might be able to give you some clues about finding you treasure.</look>
       <usestandardverblist />
       <speak type="script">
         firsttime {
@@ -538,15 +538,6 @@
     <exit alias="out" to="Bridge to the lighthouse">
       <inherit name="outdirection" />
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <attr name="money_temp" type="int">0</attr>
-      <object name="Lockpick">
-        <inherit name="editor_object" />
-      </object>
-    </object>
   </object>
   <object name="Industrial area">
     <inherit name="editor_room" />
@@ -2064,6 +2055,12 @@
     <exit alias="up" to="Thief home second floor">
       <inherit name="updirection" />
     </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <attr name="money_temp" type="int">0</attr>
+    </object>
   </object>
   <object name="Thief home second floor">
     <inherit name="editor_room" />
@@ -2073,6 +2070,9 @@
     <object name="Eileen Snyder">
       <inherit name="editor_object" />
       <inherit name="female" />
+      <object name="Lockpick">
+        <inherit name="editor_object" />
+      </object>
     </object>
   </object>
   <object name="Shipwreck">
