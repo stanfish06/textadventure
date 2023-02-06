@@ -2085,30 +2085,6 @@
       <inherit name="editor_player" />
       <feature_container />
       <attr name="money_temp" type="int">0</attr>
-      <object name="Fish2">
-        <inherit name="editor_object" />
-        <alias>mackerel</alias>
-        <isaFish />
-        <visible type="boolean">false</visible>
-      </object>
-      <object name="Fish3">
-        <inherit name="editor_object" />
-        <alias>seatrout</alias>
-        <isaFish />
-        <visible type="boolean">false</visible>
-      </object>
-      <object name="Fish4">
-        <inherit name="editor_object" />
-        <alias>redfish</alias>
-        <isaFish />
-        <visible type="boolean">false</visible>
-      </object>
-      <object name="Fish5">
-        <inherit name="editor_object" />
-        <alias>flounder</alias>
-        <isaFish />
-        <visible type="boolean">false</visible>
-      </object>
     </object>
   </object>
   <object name="Thief home second floor">
@@ -2281,6 +2257,30 @@
     <object name="Fish1">
       <inherit name="editor_object" />
       <alias>snapper</alias>
+      <isaFish />
+      <visible type="boolean">false</visible>
+    </object>
+    <object name="Fish2">
+      <inherit name="editor_object" />
+      <alias>mackerel</alias>
+      <isaFish />
+      <visible type="boolean">false</visible>
+    </object>
+    <object name="Fish3">
+      <inherit name="editor_object" />
+      <alias>seatrout</alias>
+      <isaFish />
+      <visible type="boolean">false</visible>
+    </object>
+    <object name="Fish4">
+      <inherit name="editor_object" />
+      <alias>redfish</alias>
+      <isaFish />
+      <visible type="boolean">false</visible>
+    </object>
+    <object name="Fish5">
+      <inherit name="editor_object" />
+      <alias>flounder</alias>
       <isaFish />
       <visible type="boolean">false</visible>
     </object>
