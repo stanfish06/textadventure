@@ -861,6 +861,7 @@
         <inherit name="editor_object" />
         <take />
         <alias>rusty ax</alias>
+        <drop type="boolean">false</drop>
       </object>
     </object>
     <object name="Barrel 2">
@@ -1486,11 +1487,33 @@
           msg ("You can investigate this " +  CommandLink("go house", "house") + " now")
         }
         else if (this.parent = GetObject("Thief home")) {
+          Ask ("Talk to Johny?") {
+            if (result) {
+              msg (CommandLink("ask Johny about the lost bag", "Hey John. I want the bag you stole from the square, and I'm going to return it. You are still young. You can do a lot more things if you stop stealing."))
+            }
+          }
         }
         else {
           random_move (this)
         }
       </look>
+      <ask type="scriptdictionary">
+        <item key="the lost bag"><![CDATA[
+          PrintCentered ("\"Ha, here comes the man of justice. No, I'm not giving this to you unless you give me 20 coins. Besides, this whole bag only worth 10 coins.\"")
+          Ask ("Give Johny 20 coins?") {
+            if (result) {
+              if (GetInt(GetObject("player"), "money") >= 20) {
+                DecreaseMoney (20)
+                msg ("For real, you need to change John. Use your time to do something good.")
+                MoveObject (PickOneChild(GetObject("Thief")), player)
+              }
+              else {
+                msg ("You don't have enough coins.")
+              }
+            }
+          }
+        ]]></item>
+      </ask>
     </object>
   </object>
   <object name="Major square southeast">
@@ -2062,6 +2085,30 @@
       <inherit name="editor_player" />
       <feature_container />
       <attr name="money_temp" type="int">0</attr>
+      <object name="Fish2">
+        <inherit name="editor_object" />
+        <alias>mackerel</alias>
+        <isaFish />
+        <visible type="boolean">false</visible>
+      </object>
+      <object name="Fish3">
+        <inherit name="editor_object" />
+        <alias>seatrout</alias>
+        <isaFish />
+        <visible type="boolean">false</visible>
+      </object>
+      <object name="Fish4">
+        <inherit name="editor_object" />
+        <alias>redfish</alias>
+        <isaFish />
+        <visible type="boolean">false</visible>
+      </object>
+      <object name="Fish5">
+        <inherit name="editor_object" />
+        <alias>flounder</alias>
+        <isaFish />
+        <visible type="boolean">false</visible>
+      </object>
     </object>
   </object>
   <object name="Thief home second floor">
@@ -2201,6 +2248,33 @@
   <object name="Fishing area">
     <inherit name="editor_room" />
     <alias>fishing area</alias>
+    <enter type="script"><![CDATA[
+      Ask ("Fishing now?") {
+        if (result) {
+          fish_available = ListExclude(GetDirectChildren(GetObject("Fishing area")), GetObject("player"))
+          num_fish = ListCount(fish_available)
+          if (num_fish <> 0) {
+            fish = GetRandomInt(0,num_fish - 1)
+            if (RandomChance (50)) {
+              msg ("The rod starts shaking. You pulled it up.")
+              fish_name = GetAttribute(ListItem(fish_available, fish), "alias")
+              msg ("You got a " + fish_name + "!")
+              MakeObjectVisible (ListItem(fish_available, fish))
+              MoveObject (ListItem(fish_available, fish), player)
+              MoveObject (player, east beach)
+            }
+            else {
+              msg ("You got nothing this time. Try again later!")
+              MoveObject (player, east beach)
+            }
+          }
+          else {
+            PrintCentered ("The water seems to be very quiet today. Can't really catch any fish.")
+            MoveObject (player, east beach)
+          }
+        }
+      }
+    ]]></enter>
     <exit alias="out" to="east beach">
       <inherit name="outdirection" />
     </exit>
@@ -2208,26 +2282,7 @@
       <inherit name="editor_object" />
       <alias>snapper</alias>
       <isaFish />
-    </object>
-    <object name="Fish2">
-      <inherit name="editor_object" />
-      <alias>mackerel</alias>
-      <isaFish />
-    </object>
-    <object name="Fish3">
-      <inherit name="editor_object" />
-      <alias>seatrout</alias>
-      <isaFish />
-    </object>
-    <object name="Fish4">
-      <inherit name="editor_object" />
-      <alias>redfish</alias>
-      <isaFish />
-    </object>
-    <object name="Fish5">
-      <inherit name="editor_object" />
-      <alias>flounder</alias>
-      <isaFish />
+      <visible type="boolean">false</visible>
     </object>
   </object>
   <verb>
