@@ -13,6 +13,7 @@
     <author>Stan Yu, Andrew Kresic, Sarah Cheng, Bolurin Ojo</author>
     <gridmap />
     <mapexitwidth type="int">3</mapexitwidth>
+    <bordercolour>Black</bordercolour>
   </game>
   <object name="Home">
     <inherit name="editor_room" />
@@ -478,49 +479,20 @@
       <usestandardverblist />
       <speak type="script">
         firsttime {
-          msg ("What do you want?")
-          Ask ("Are you Sean?") {
-            msg ("Yes, who are you?")
-            Ask ("I'm Kade Bellman. Treasure Hunter from Hymia. ") {
-              msg ("What do you want?")
+          msg ("\"Well, well... who might this be?\" says the man.")
+          wait {
+            msg ("\"Kade Bellman, from Hymia\"")
+            msg ("\"Ah, a fellow hunter I see... Seems to me like you're wasting your time here in Nelfport.\"")
+            wait {
+              msg ("\"Wasting my time...?\"")
+              msg ("\"Yea, wasting your time.\"")
               wait {
-              }
-              Ask ("I heard about a treasue hiding in some place at Nelfport, but nobody has found them yet") {
-                msg ("I do know some things that might aid you in your search. What's in it for me. ")
-                msg ("If you want my help you need some gold coins to exchange for information.")
-                Ask ("Where can I find these gold coins") {
-                  msg ("To find gold coins, you need to search all the differnt places you travel o. You may also be able to get them in return for helping others")
-                }
-              }
-            }
-          }
-        }
-        otherwise {
-          msg ("Do you have my coins?")
-          if (Got(Gold coin 1)) {
-            Ask ("Give coins to Sean") {
-              if (result) {
-                MoveObject (Gold coin 20, Sean)
-                msg ("Thanks. Now here's what I know about your tresure.")
-                msg ("Long ago, two ships loaded with gold and jewlery crashed in the middle of the sea, all all the treasure sunk into the water.")
-                msg ("Here is the map to the location of the shipwreak. ")
-                MakeObjectVisible (Chest)
-                AddToInventory (Chest)
+                msg ("\"Who're you?\"")
               }
             }
           }
         }
       </speak>
-      <ask type="scriptdictionary">
-        <item key="areSean">
-          msg ("Yes I'm Sean, who's asking...")
-        </item>
-      </ask>
-      <tell type="scriptdictionary">
-        <item key="idk">
-          msg ("I don't have a clue what you're talking about.")
-        </item>
-      </tell>
       <object name="Chest">
         <inherit name="editor_object" />
         <inherit name="container_closed" />
