@@ -115,17 +115,9 @@
       </displayverbs>
       <attr name="feature_container" type="boolean">false</attr>
       <look type="script">
-        OutputTextNoBr ("You go to step outside and search your shed for something that migt be useful, but as you do, you hear a cackling laugh... You skip over the shed and go around it, to see lights coming from the forest behind your house, and a weird smell accompanying the lights. As you approach, she calls out to you by name... \"Kade... yesss... come closer, I have something to tell you,\" says the witch. \"In your future I see the city of Nelport and its busy markets and merchants. One merchant in particular, one who sells leather and hides, one that owes me a favor... Now I know you're going to be busy when you reach Nelport, but couldn't help a poor old soul? Just give this potion to the man who sells leather in the markets, and I'll pay you once I know it's done, hmmmmm...?\"")
-        AddToInventory (Witchs Brew)
+        OutputTextNoBr ("You don't find anything back here, but get an uneasy feeling as you leave the house.")
         MakeObjectInvisible (Backyard Shed)
       </look>
-      <object name="Witchs Brew">
-        <inherit name="editor_object" />
-        <scenery />
-        <alias>Witch's Brew</alias>
-        <drop />
-        <feature_usegive />
-      </object>
     </object>
     <object name="Broom Closet">
       <inherit name="editor_object" />
@@ -229,11 +221,6 @@
           RemoveObject (Carriage Parts)
         </item>
       </selfuseon>
-    </object>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
     </object>
   </object>
   <object name="Dark Forest">
@@ -437,10 +424,147 @@
   <object name="Bridge to the lighthouse">
     <inherit name="editor_room" />
     <alias>Beacon bridge</alias>
+    <exit alias="in" to="Lighthouse">
+      <inherit name="indirection" />
+    </exit>
+    <exit alias="east" to="east beach">
+      <inherit name="eastdirection" />
+    </exit>
   </object>
   <object name="Lighthouse">
     <inherit name="editor_room" />
     <alias>Guardian lighthouse</alias>
+    <object name="Sean">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <look>Hunched over a chair in the corner, you see an old man with his back turned to you. It's Sean Paulie, a former treasue huner. He might be able to give you some clues about finding you treasure.</look>
+      <speak type="script">
+        firsttime {
+          msg ("What do you want?")
+          Ask ("Are you Sean?") {
+            msg ("Yes, who are you?")
+            Ask ("I'm Kade Bellman. Treasure Hunter from Hymia. ") {
+              msg ("What do you want?")
+              Ask ("I heard about a treasue hiding in some place at Nelfport, but nobody has found them yet") {
+                msg ("I do know some things that might aid you in your search. What's in it for me. ")
+                msg ("If you want my help you need some gold coins to exchange for information.")
+                Ask ("Where can I find these gold coins") {
+                  msg ("To find gold coins, you need to search all the differnt places you travel o. You may also be able to get them in return for helping others")
+                }
+              }
+            }
+          }
+        }
+        otherwise {
+          msg ("Do you have my coins?")
+          if (Got(Gold coin 1)) {
+            Ask ("Give coins to Sean") {
+              if (result) {
+                MoveObject (Gold coin 20, Sean)
+                msg ("Thanks. Now here's what I know about your tresure.")
+                msg ("Long ago, two ships loaded with gold and jewlery crashed in the middle of the sea, all all the treasure sunk into the water.")
+                msg ("Here is the map to the location of the shipwreak. ")
+                MakeObjectVisible (Chest)
+                AddToInventory (Chest)
+              }
+            }
+          }
+        }
+        firsttime {
+          msg ("What do you want?")
+          Ask ("Are you Sean?") {
+            msg ("Yes, who are you?")
+            Ask ("I'm Kade Bellman. Treasure Hunter from Hymia. ") {
+              msg ("What do you want?")
+              wait {
+              }
+              Ask ("I heard about a treasue hiding in some place at Nelfport, but nobody has found them yet") {
+                msg ("I do know some things that might aid you in your search. What's in it for me. ")
+                msg ("If you want my help you need some gold coins to exchange for information.")
+                Ask ("Where can I find these gold coins") {
+                  msg ("To find gold coins, you need to search all the differnt places you travel o. You may also be able to get them in return for helping others")
+                }
+              }
+            }
+          }
+        }
+        otherwise {
+          msg ("Do you have my coins?")
+          if (Got(Gold coin 1)) {
+            Ask ("Give coins to Sean") {
+              if (result) {
+                MoveObject (Gold coin 20, Sean)
+                msg ("Thanks. Now here's what I know about your tresure.")
+                msg ("Long ago, two ships loaded with gold and jewlery crashed in the middle of the sea, all all the treasure sunk into the water.")
+                msg ("Here is the map to the location of the shipwreak. ")
+                MakeObjectVisible (Chest)
+                AddToInventory (Chest)
+              }
+            }
+          }
+        }
+      </speak>
+      <usestandardverblist />
+      <ask type="scriptdictionary">
+        <item key="areSean">
+          msg ("Yes I'm Sean, who's asking...")
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="idk">
+          msg ("I don't have a clue what you're talking about.")
+        </item>
+      </tell>
+      <object name="Chest">
+        <inherit name="editor_object" />
+        <inherit name="container_closed" />
+        <look type="string"></look>
+        <feature_container />
+        <close type="boolean">false</close>
+        <onopen type="script">
+          MakeObjectVisible (Map)
+          MakeObjectVisible (Key)
+        </onopen>
+        <visible type="boolean">false</visible>
+        <hidechildren />
+        <listchildren />
+        <object name="Map">
+          <inherit name="editor_object" />
+          <alias>Map</alias>
+          <look>You see a map with a red X marked in the middle of the ocean.</look>
+          <take />
+          <ontake type="script">
+            AddToInventory (Map)
+            if (Got(Diving Helmet)) {
+              create exit ("Treasure", Lighthouse, Shipwreck)
+              MakeObjectVisible (Shipwreck)
+            }
+            else {
+              msg ("You are not ready to go to the Shipwreck yet. Try to find a diving helmet")
+            }
+          </ontake>
+          <visible />
+        </object>
+        <object name="Key">
+          <inherit name="editor_object" />
+          <look>An old metal key. It might come in useful later</look>
+          <take />
+          <takemsg>You took the key</takemsg>
+          <ontake type="script">
+            AddToInventory (Key)
+          </ontake>
+          <visible />
+        </object>
+      </object>
+    </object>
+    <exit alias="out" to="Bridge to the lighthouse">
+      <inherit name="outdirection" />
+    </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+    </object>
   </object>
   <object name="Industrial area">
     <inherit name="editor_room" />
@@ -1443,6 +1567,56 @@
         <inherit name="editor_object" />
       </object>
     </object>
+  </object>
+  <object name="Shipwreck">
+    <inherit name="editor_room" />
+    <visible type="boolean">false</visible>
+    <object name="Treasure">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <inherit name="container_lockable" />
+      <feature_container />
+      <keycount type="int">1</keycount>
+      <key type="object">Key</key>
+      <autounlock type="boolean">false</autounlock>
+      <lockmessage>Locked. you need a key</lockmessage>
+      <onunlock type="script">
+        PrintCentered ("Congradulations! You found the treasure.")
+        msg ("After successfully finding the treasure, Kade Bellman loads all the treasue into his carriage and returns to Hymia")
+        finish
+      </onunlock>
+      <visible type="boolean">false</visible>
+      <close type="boolean">false</close>
+    </object>
+    <exit alias="north" to="Ocean">
+      <inherit name="northdirection" />
+    </exit>
+    <object name="Ocean">
+      <inherit name="editor_room" />
+      <description>There is nothing here</description>
+      <exit alias="south" to="Shipwreck">
+        <inherit name="southdirection" />
+      </exit>
+      <exit alias="east" to="Shipwreck">
+        <inherit name="eastdirection" />
+      </exit>
+      <exit alias="north" to="Shipwreck">
+        <inherit name="northdirection" />
+      </exit>
+    </object>
+    <exit alias="east" to="Treasure">
+      <inherit name="eastdirection" />
+      <message>You found the treasue chest</message>
+      <runscript type="boolean">false</runscript>
+      <script type="script">
+      </script>
+    </exit>
+    <exit alias="west" to="Ocean">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="south" to="Ocean">
+      <inherit name="southdirection" />
+    </exit>
   </object>
   <function name="random_move" parameters="agent"><![CDATA[
     position = agent.parent
