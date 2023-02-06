@@ -11,6 +11,8 @@
     <category>Fantasy</category>
     <subtitle>For ECSE 290</subtitle>
     <author>Stan Yu, Andrew Kresic, Sarah Cheng, Bolurin Ojo</author>
+    <gridmap />
+    <mapexitwidth type="int">3</mapexitwidth>
   </game>
   <object name="Home">
     <inherit name="editor_room" />
@@ -230,11 +232,6 @@
         </item>
       </selfuseon>
     </object>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-    </object>
   </object>
   <object name="Dark Forest">
     <inherit name="editor_room" />
@@ -426,8 +423,43 @@
       <open type="boolean">false</open>
       <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag8)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person8"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag8, Normal person8)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person8"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
       <object name="bag8">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -815,14 +847,55 @@
       <alias>woman with a elegant gown and a fur wrap</alias>
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
-      <attr name="lost_small_bag" type="boolean">false</attr>
+      <lost_small_bag />
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag1)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person1"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag1, Normal person1)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person1"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <object name="bag1">
         <inherit name="editor_object" />
         <alias>small bag</alias>
       </object>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
     </object>
   </object>
   <object name="Major square east">
@@ -857,8 +930,43 @@
       <isopen type="boolean">false</isopen>
       <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag2)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person2"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag2, Normal person2)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person2"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
       <object name="bag2">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -900,8 +1008,43 @@
       <isopen type="boolean">false</isopen>
       <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag3)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person3"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag3, Normal person3)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person3"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
       <object name="bag3">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -941,8 +1084,43 @@
       <close />
       <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag4)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person4"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag4, Normal person4)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person4"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
       <object name="bag4">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -975,8 +1153,43 @@
       <isopen type="boolean">false</isopen>
       <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag5)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person5"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag5, Normal person5)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person5"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
       <object name="bag5">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -1000,8 +1213,14 @@
       <inherit name="editor_object" />
       <speak type="script">
         firsttime {
-          msg ("Look for the suspicious people around this square.")
+          PrintCentered ("\"So you want to find the theif. There is a really useful method I can share with you.\"")
+          PrintCentered ("\"There are many people in this city square right now, and it is difficult to find the thief based on each of their appearance.\"")
           set (Thief, "startSteal", true)
+          SetFontSize (16)
+          PrintCentered ("\"However, from my experience, a theif usually move more frequent than a normal person to find a target to steal. Once you find a frequently moving person, keep your eyes on him and follow him because he is going to steal at any time at any place.\"")
+          PrintCentered ("\"Of course. Normal people can move sometimes as well, so don't get confused by those people.\"")
+          SetFontSize (12)
+          PrintCentered ("\"Good luck!\"")
         }
         otherwise {
           msg ("Did you find any suspicious people?")
@@ -1021,8 +1240,43 @@
       <open type="boolean">false</open>
       <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag6)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person6"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag6, Normal person6)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person6"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
       <object name="bag6">
         <inherit name="editor_object" />
         <alias>small bag</alias>
@@ -1098,8 +1352,43 @@
       <open type="boolean">false</open>
       <attr name="lost_small_bag" type="boolean">false</attr>
       <look type="script">
-        random_move (this)
+        if (this.lost_small_bag = False) {
+          random_move (this)
+        }
+        else {
+          msg ("This person looks frustrated. Probably because Johny stole " + this.article + " bag.")
+          Ask ("Return the bag?") {
+            if (result) {
+              if (Got(bag7)) {
+                msg ("Kade walks to this person and ask:")
+                msg (CommandLink("ask " + GetAttribute(GetObject("Normal person7"), "alias") + " about the lost bag", "Hi! Are you looking for a small bag?"))
+              }
+              else {
+                msg ("You don't have the bag that should be returned.")
+              }
+            }
+          }
+        }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <ask type="scriptdictionary">
+        <item key="the lost bag">
+          PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
+          msg ("Here is your bag.")
+          MoveObject (bag7, Normal person7)
+          msg (CommandLink ("tell " + GetAttribute(GetObject("Normal person7"), "alias") + " about thief", "I saw that your bag was stolen by a theif, and I chased him down. He dropped your bag while running, and I stopped chasing him and decided to return the bag to you."))
+        </item>
+      </ask>
+      <tell type="scriptdictionary">
+        <item key="thief">
+          PrintCentered ("\"Thank you so much sir! You are really a brave and helpful man.\"")
+          PrintCentered ("\"This world needs more kind people like you! Here are 50 gold coins. Please take them, or I'll be embarrassed.\"")
+          msg ("You got 50 gold coins into your pocket!")
+          IncreaseMoney (50)
+        </item>
+      </tell>
       <object name="bag7">
         <inherit name="editor_object" />
         <alias>small bag</alias>
