@@ -422,6 +422,9 @@
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
       <attr name="lost_small_bag" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -441,9 +444,6 @@
           }
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -473,6 +473,9 @@
   <object name="Lighthouse">
     <inherit name="editor_room" />
     <alias>Guardian lighthouse</alias>
+    <object name="Sean">
+      <inherit name="editor_object" />
+    </object>
   </object>
   <object name="Industrial area">
     <inherit name="editor_room" />
@@ -530,6 +533,100 @@
       <runscript type="boolean">false</runscript>
       <prefix>Iron</prefix>
     </exit>
+    <object name="Fishmonger">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <look>A person who sells and buys raw fish and seafood. If you have fish in your inventory, you can sell it here.</look>
+      <alias>fishmonger</alias>
+      <feature_usegive />
+      <sell type="script">
+        PrintCentered ("\"What fish do you have right now?\"")
+        all_items = GetDirectChildren(GetObject("player"))
+        fish_list = NewList()
+        foreach (item, all_items) {
+          if (HasAttribute(item, "isaFish")) {
+            list add (fish_list, CommandLink("give " + GetAttribute(item, "alias") + " to fishmonger", GetAttribute(item, "alias")))
+          }
+        }
+        msg ("Here are all the fish you have right now:")
+        DisplayList (fish_list, true)
+      </sell>
+      <speak type="script">
+        PrintCentered ("\"Hey brother. Check out today's fresh seafoods.\"")
+      </speak>
+      <give type="scriptdictionary">
+        <item key="Fish1">
+          price = GetRandomInt(10,15)
+          set (player, "money_temp", price)
+          PrintCentered ("\"A " + GetAttribute(GetObject("Fish1"), "alias") + "! The current market price is " + price + " gold coins.\"")
+          Ask ("Sell it to fishmonger? (Note that the market price may change next time.)") {
+            if (result) {
+              IncreaseMoney (GetAttribute(GetObject("player"), "money_temp"))
+              set (player, "money_temp", 0)
+              PrintCentered ("\"Nice deal brother!\"")
+              MoveObject (Fish1, Fishmonger)
+            }
+          }
+        </item>
+        <item key="Fish2">
+          price = GetRandomInt(5,10)
+          set (player, "money_temp", price)
+          PrintCentered ("\"A " + GetAttribute(GetObject("Fish2"), "alias") + "! The current market price is " + price + " gold coins.\"")
+          Ask ("Sell it to fishmonger? (Note that the market price may change next time.)") {
+            if (result) {
+              IncreaseMoney (GetAttribute(GetObject("player"), "money_temp"))
+              set (player, "money_temp", 0)
+              PrintCentered ("\"Nice deal brother!\"")
+              MoveObject (Fish2, Fishmonger)
+            }
+          }
+        </item>
+        <item key="Fish3">
+          price = GetRandomInt(15,20)
+          set (player, "money_temp", price)
+          PrintCentered ("\"A " + GetAttribute(GetObject("Fish3"), "alias") + "! The current market price is " + price + " gold coins.\"")
+          Ask ("Sell it to fishmonger? (Note that the market price may change next time.)") {
+            if (result) {
+              IncreaseMoney (GetAttribute(GetObject("player"), "money_temp"))
+              set (player, "money_temp", 0)
+              PrintCentered ("\"Nice deal brother!\"")
+              MoveObject (Fish3, Fishmonger)
+            }
+          }
+        </item>
+        <item key="Fish4">
+          price = GetRandomInt(12,17)
+          set (player, "money_temp", price)
+          PrintCentered ("\"A " + GetAttribute(GetObject("Fish4"), "alias") + "! The current market price is " + price + " gold coins.\"")
+          Ask ("Sell it to fishmonger? (Note that the market price may change next time.)") {
+            if (result) {
+              IncreaseMoney (GetAttribute(GetObject("player"), "money_temp"))
+              set (player, "money_temp", 0)
+              PrintCentered ("\"Nice deal brother!\"")
+              MoveObject (Fish4, Fishmonger)
+            }
+          }
+        </item>
+        <item key="Fish5">
+          price = GetRandomInt(17,23)
+          set (player, "money_temp", price)
+          PrintCentered ("\"A " + GetAttribute(GetObject("Fish5"), "alias") + "! The current market price is " + price + " gold coins.\"")
+          Ask ("Sell it to fishmonger? (Note that the market price may change next time.)") {
+            if (result) {
+              IncreaseMoney (GetAttribute(GetObject("player"), "money_temp"))
+              set (player, "money_temp", 0)
+              PrintCentered ("\"Nice deal brother!\"")
+              MoveObject (Fish5, Fishmonger)
+            }
+          }
+        </item>
+      </give>
+    </object>
+    <object name="Boatman">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <alias>boatman</alias>
+    </object>
   </object>
   <object name="Small plaza north">
     <inherit name="editor_room" />
@@ -713,6 +810,11 @@
         <inherit name="editor_object" />
         <take />
         <alias>fishing rod</alias>
+        <drop type="boolean">false</drop>
+        <ontake type="script">
+          UnlockExit (fishing area)
+          msg ("You can now go fishing near the beach. The beach is at the northest side of the city.")
+        </ontake>
       </object>
     </object>
   </object>
@@ -848,6 +950,10 @@
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <lost_small_bag />
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -867,7 +973,6 @@
           }
         }
       </look>
-      <attr name="feature_usegive" type="boolean">false</attr>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -884,18 +989,10 @@
           IncreaseMoney (50)
         </item>
       </tell>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <object name="bag1">
         <inherit name="editor_object" />
         <alias>small bag</alias>
       </object>
-    </object>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
     </object>
   </object>
   <object name="Major square east">
@@ -929,6 +1026,9 @@
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <attr name="lost_small_bag" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -948,9 +1048,6 @@
           }
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -1007,6 +1104,9 @@
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <attr name="lost_small_bag" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -1026,9 +1126,6 @@
           }
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -1083,6 +1180,9 @@
       <isopen type="boolean">false</isopen>
       <close />
       <attr name="lost_small_bag" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -1102,9 +1202,6 @@
           }
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -1152,6 +1249,9 @@
       <open type="boolean">false</open>
       <isopen type="boolean">false</isopen>
       <attr name="lost_small_bag" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -1171,9 +1271,6 @@
           }
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -1215,12 +1312,12 @@
         firsttime {
           PrintCentered ("\"So you want to find the theif. There is a really useful method I can share with you.\"")
           PrintCentered ("\"There are many people in this city square right now, and it is difficult to find the thief based on each of their appearance.\"")
-          set (Thief, "startSteal", true)
           SetFontSize (16)
           PrintCentered ("\"However, from my experience, a theif usually move more frequent than a normal person to find a target to steal. Once you find a frequently moving person, keep your eyes on him and follow him because he is going to steal at any time at any place.\"")
           PrintCentered ("\"Of course. Normal people can move sometimes as well, so don't get confused by those people.\"")
           SetFontSize (12)
           PrintCentered ("\"Good luck!\"")
+          set (Thief, "startSteal", true)
         }
         otherwise {
           msg ("Did you find any suspicious people?")
@@ -1239,6 +1336,9 @@
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
       <attr name="lost_small_bag" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -1258,9 +1358,6 @@
           }
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -1324,6 +1421,12 @@
           random_move (this)
         }
       </look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <isopen type="boolean">false</isopen>
     </object>
   </object>
   <object name="Major square southeast">
@@ -1351,6 +1454,9 @@
       <isopen type="boolean">false</isopen>
       <open type="boolean">false</open>
       <attr name="lost_small_bag" type="boolean">false</attr>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
       <look type="script">
         if (this.lost_small_bag = False) {
           random_move (this)
@@ -1370,9 +1476,6 @@
           }
         }
       </look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
       <ask type="scriptdictionary">
         <item key="the lost bag">
           PrintCentered ("\"Yes! I have been searching for a long time. Do you know where it goes?\"")
@@ -1403,6 +1506,10 @@
     <exit alias="east" to="east rocky shore">
       <inherit name="eastdirection" />
     </exit>
+    <exit name="fishing area" alias="fishing" to="Fishing area">
+      <inherit name="indirection" />
+      <locked />
+    </exit>
   </object>
   <object name="west beach">
     <inherit name="editor_room" />
@@ -1412,6 +1519,125 @@
     <exit alias="east" to="east beach">
       <inherit name="eastdirection" />
     </exit>
+    <object name="Rotten wood box">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <inherit name="container_lockable" />
+      <alias>rotten wood box</alias>
+      <look>A rotten wood box washed up on the beach. It is tightly sealed, so the only way to open it is to use an ax to chop off its outer layer.</look>
+      <feature_container />
+      <close type="boolean">false</close>
+      <isopen type="boolean">false</isopen>
+      <keycount type="int">1</keycount>
+      <key type="object">Rusty ax</key>
+      <autounlock type="boolean">false</autounlock>
+      <autoopen />
+      <nokeymessage>You need an ax to open it.</nokeymessage>
+      <unlockmessage>You chopped off the outer layer of the box.</unlockmessage>
+      <lockmessage>Still not open yet.</lockmessage>
+      <chop type="script">
+        if (not this.locked) {
+          msg (DynamicTemplate("AlreadyUnlocked", this))
+        }
+        else {
+          if (AllKeysAvailable(this)) {
+            msg (this.unlockmessage)
+            this.locked = false
+            if (this.autoopen and not this.isopen) {
+              TryOpenClose (true, this)
+            }
+          }
+          else {
+            msg (this.nokeymessage)
+          }
+        }
+      </chop>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+        <value>Open</value>
+      </displayverbs>
+      <listchildren />
+      <object name="Gold coin 21">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 22">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 23">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 24">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 25">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 26">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 27">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 28">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 29">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+      <object name="Gold coin 30">
+        <inherit name="editor_object" />
+        <alias>gold coin</alias>
+        <take />
+        <ontake type="script">
+          pick_up_gold_coin (this)
+        </ontake>
+      </object>
+    </object>
   </object>
   <object name="east rocky shore">
     <inherit name="editor_room" />
@@ -1454,9 +1680,16 @@
       <feature_container />
       <keycount type="int">1</keycount>
       <nokeymessage>You do not have the lockpick.</nokeymessage>
-      <locked type="boolean">false</locked>
+      <locked />
       <isopen type="boolean">false</isopen>
       <key type="object">Lockpick</key>
+      <listchildren />
+      <autounlock type="boolean">false</autounlock>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+        <value>Open</value>
+        <value>unlock</value>
+      </displayverbs>
       <object name="Gold coin 6">
         <inherit name="editor_object" />
         <alias>gold coin</alias>
@@ -1578,6 +1811,15 @@
         </ontake>
       </object>
     </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <attr name="money_temp" type="int">0</attr>
+      <object name="Lockpick">
+        <inherit name="editor_object" />
+      </object>
+    </object>
   </object>
   <verb>
     <property>catch</property>
@@ -1601,10 +1843,40 @@
     <exit alias="outside" to="Small plaza west">
       <inherit name="outdirection" />
     </exit>
-    <object name="Loundry shop owner">
+    <object name="Laundry shop owner">
       <inherit name="editor_object" />
+      <inherit name="female" />
       <alias>Kati</alias>
       <look>A very friendly laundry shop owner.</look>
+      <ask type="scriptdictionary">
+        <item key="the job">
+          if (GetBoolean(GetObject("Laundry shop owner"), "job_done") = False) {
+            PrintCentered ("\"Yes! We got a lot of clothes to clean today. I can pay you 15 gold coins for one day of work!\"")
+            Ask ("Take this job?") {
+              if (result) {
+                msg ("You start to work. (Note: this will take 15 seconds.)")
+                EnableTimer (laundry)
+              }
+            }
+          }
+          else {
+            PrintCentered ("\"We don't have new jobs available now.\"")
+          }
+        </item>
+      </ask>
+      <speak type="script">
+        response = NewList()
+        list add (response, CommandLink("ask Kati about the job", "Is there job opportunity here?"))
+        list add (response, CommandLink("tell Kati about nothing", "I'm alright, just looking around."))
+        PrintCentered ("\"Hi! How can I help you today?\"")
+        DisplayList (response, true)
+      </speak>
+      <tell type="scriptdictionary">
+        <item key="nothing">
+          PrintCentered ("\"You have a great day sir!\"")
+        </item>
+      </tell>
+      <attr name="job_done" type="boolean">false</attr>
     </object>
   </object>
   <object name="Small alley">
@@ -1660,11 +1932,19 @@
           list add (response_q2, CommandLink("tell Door keeper about what you saw at the city square", "I saw one of your guys stole a small bag at the city square, and I saw him entering this door. If I'm a cop, I would have catched him already."))
           DisplayList (response_q2, true)
         </item>
-        <item key="money">
+        <item key="money"><![CDATA[
           OutputTextNoBr ("\"Five coins? You think I'm a begger? Give me 20 coins or leave this place right now.\"")
           Ask ("Give 20 coins?") {
+            if (result) {
+              if (GetInt(GetObject("player"), "money") >= 20) {
+                DecreaseMoney (20)
+              }
+              else {
+                msg ("You don't have enough coins.")
+              }
+            }
           }
-        </item>
+        ]]></item>
         <item key="nothing">
           PrintCentered ("\"Then I won't open the door.\"")
         </item>
@@ -1728,11 +2008,50 @@
     <object name="Eileen Snyder">
       <inherit name="editor_object" />
       <inherit name="female" />
-      <object name="Lockpick">
-        <inherit name="editor_object" />
-      </object>
     </object>
   </object>
+  <verb>
+    <property>sell</property>
+    <pattern>sell</pattern>
+    <defaultexpression>"You can't sell " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="Fishing area">
+    <inherit name="editor_room" />
+    <alias>fishing area</alias>
+    <exit alias="out" to="east beach">
+      <inherit name="outdirection" />
+    </exit>
+    <object name="Fish1">
+      <inherit name="editor_object" />
+      <alias>snapper</alias>
+      <isaFish />
+    </object>
+    <object name="Fish2">
+      <inherit name="editor_object" />
+      <alias>mackerel</alias>
+      <isaFish />
+    </object>
+    <object name="Fish3">
+      <inherit name="editor_object" />
+      <alias>seatrout</alias>
+      <isaFish />
+    </object>
+    <object name="Fish4">
+      <inherit name="editor_object" />
+      <alias>redfish</alias>
+      <isaFish />
+    </object>
+    <object name="Fish5">
+      <inherit name="editor_object" />
+      <alias>flounder</alias>
+      <isaFish />
+    </object>
+  </object>
+  <verb>
+    <property>chop</property>
+    <pattern>chop</pattern>
+    <defaultexpression>"You can't chop " + object.article + "."</defaultexpression>
+  </verb>
   <function name="random_move" parameters="agent"><![CDATA[
     position = agent.parent
     d = NewStringDictionary()
@@ -1746,12 +2065,12 @@
     dictionary add (d, "8", "Major square south")
     dictionary add (d, "9", "Major square southeast")
     if (agent.identity = "thief" and agent.startSteal = True) {
-      people = GetDirectChildren(position)
+      people = ListExclude(GetDirectChildren(position), GetObject("player"))
       stop = False
       foreach (individual, people) {
         if (stop = False) {
-          if (individual.name <> agent.name) {
-            if (agent.time_until_steal = 0) {
+          if (individual.name <> agent.name ) {
+            if (agent.time_until_steal <= 0) {
               item = PickOneChild(individual)
               if (item <> null) {
                 item_name = GetAttribute (item, "alias")
@@ -1845,6 +2164,16 @@
       MakeExitVisible (entry path)
       msg (CommandLink("go northwest path", "walk down the northwest path"))
       DisableTimer (fivesec)
+    </script>
+  </timer>
+  <timer name="laundry">
+    <interval>5</interval>
+    <script>
+      msg ("Done! You got 15 gold coins into your pocket.")
+      IncreaseMoney (15)
+      MoveObject (player, Small plaza west)
+      set (Laundry shop owner, "job_done", True)
+      DisableTimer (laundry)
     </script>
   </timer>
 </asl>
