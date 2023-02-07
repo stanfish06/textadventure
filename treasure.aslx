@@ -477,25 +477,50 @@
       <inherit name="male" />
       <look>Hunched over a chair in the corner, you see an old man with his back turned to you. It's Sean Paulie, a former treasue hunter. He might be able to give you some clues about finding you treasure.</look>
       <usestandardverblist />
-      <speak type="script">
+      <speak type="script"><![CDATA[
         firsttime {
           msg ("\"Well, well... who might this be?\" says the man.")
           wait {
             msg ("\"Kade Bellman, from Hymia\"")
-            msg ("\"Ah, a fellow hunter I see... Seems to me like you're wasting your time here in Nelfport.\"")
+            msg ("\"Ah, a fellow hunter I see... And what can Old Sean help you with\"")
             wait {
-              msg ("\"Wasting my time...?\"")
-              msg ("\"Yea, wasting your time.\"")
+              msg ("\"I heard that's there lost treasure right here in Nelfport.\"")
+              msg ("\"Ah yes the treasure... I might know something about that.\"")
               wait {
-                msg ("\"Who're you?\"")
+                msg ("\"Great\"")
+                msg ("\"Not so fast, I never said I would just give you the info. Everything has a price\"")
+                wait {
+                  msg ("\"What do you want?\"")
+                  msg ("\"For 20 gold coins I could give you the info that you seek\"")
+                }
               }
             }
           }
         }
-      </speak>
+        otherwise {
+          Ask ("Give 20 coins?") {
+            if (result) {
+              if (GetInt(GetObject("player"), "money") >= 20) {
+                DecreaseMoney (20)
+                msg ("\"Pleasure doing business with you\"")
+                msg ("\"Long time ago, two ships loaded with gold and jewlery crashed into eachother in the middle of the sea\"")
+                msg ("\"All the treasure sunk never to be seen again\"")
+                wait {
+                  msg ("\"Lucky for you I have the map of its location\"")
+                  MakeObjectVisible (Chest)
+                }
+              }
+              else {
+                msg ("You don't have enough coins.")
+              }
+            }
+          }
+        }
+      ]]></speak>
       <object name="Chest">
         <inherit name="editor_object" />
         <inherit name="container_closed" />
+        <inherit name="container_lockable" />
         <look type="string"></look>
         <feature_container />
         <close type="boolean">false</close>
@@ -503,9 +528,10 @@
         <hidechildren />
         <listchildren />
         <onopen type="script">
-          MakeObjectVisible (Map)
-          MakeObjectVisible (Key)
         </onopen>
+        <keycount type="int">1</keycount>
+        <key type="object">Diving Helmet</key>
+        <nokeymessage>You do not have the Diving Helmet.</nokeymessage>
         <object name="Map">
           <inherit name="editor_object" />
           <alias>Map</alias>
@@ -516,7 +542,6 @@
             AddToInventory (Map)
             if (Got(Diving Helmet)) {
               create exit ("Treasure", Lighthouse, Shipwreck)
-              MakeObjectVisible (Shipwreck)
             }
             else {
               msg ("You are not ready to go to the Shipwreck yet. Try to find a diving helmet")
@@ -2057,12 +2082,6 @@
     <exit alias="up" to="Thief home second floor">
       <inherit name="updirection" />
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <attr name="money_temp" type="int">0</attr>
-    </object>
   </object>
   <object name="Thief home second floor">
     <inherit name="editor_room" />
@@ -2146,23 +2165,6 @@
   <object name="Shipwreck">
     <inherit name="editor_room" />
     <visible type="boolean">false</visible>
-    <object name="Treasure">
-      <inherit name="editor_object" />
-      <inherit name="container_closed" />
-      <inherit name="container_lockable" />
-      <feature_container />
-      <keycount type="int">1</keycount>
-      <autounlock type="boolean">false</autounlock>
-      <lockmessage>Locked. you need a key</lockmessage>
-      <visible type="boolean">false</visible>
-      <close type="boolean">false</close>
-      <key type="object">Key</key>
-      <onunlock type="script">
-        PrintCentered ("Congradulations! You found the treasure.")
-        msg ("After successfully finding the treasure, Kade Bellman loads all the treasue into his carriage and returns to Hymia")
-        finish
-      </onunlock>
-    </object>
     <exit alias="north" to="Ocean">
       <inherit name="northdirection" />
     </exit>
@@ -2178,19 +2180,48 @@
       <exit alias="north" to="Shipwreck">
         <inherit name="northdirection" />
       </exit>
+      <exit alias="west" to="Shipwreck">
+        <inherit name="westdirection" />
+      </exit>
     </object>
-    <exit alias="east" to="Treasure">
-      <inherit name="eastdirection" />
-      <message>You found the treasue chest</message>
-      <runscript type="boolean">false</runscript>
-      <script type="script">
-      </script>
-    </exit>
     <exit alias="west" to="Ocean">
       <inherit name="westdirection" />
     </exit>
     <exit alias="south" to="Ocean">
       <inherit name="southdirection" />
+    </exit>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <attr name="money_temp" type="int">0</attr>
+    </object>
+    <object name="Ocean Treasure">
+      <inherit name="editor_room" />
+      <alias>Ocean</alias>
+      <exit alias="west" to="Shipwreck">
+        <inherit name="westdirection" />
+      </exit>
+      <object name="Treasure">
+        <inherit name="editor_object" />
+        <inherit name="container_closed" />
+        <inherit name="container_lockable" />
+        <feature_container />
+        <keycount type="int">1</keycount>
+        <autounlock type="boolean">false</autounlock>
+        <lockmessage>Locked. you need a key</lockmessage>
+        <visible type="boolean">false</visible>
+        <close type="boolean">false</close>
+        <key type="object">Key</key>
+        <onunlock type="script">
+          PrintCentered ("Congradulations! You found the treasure.")
+          msg ("After successfully finding the treasure, Kade Bellman loads all the treasue into his carriage and returns to Hymia")
+          finish
+        </onunlock>
+      </object>
+    </object>
+    <exit alias="east" to="Ocean Treasure">
+      <inherit name="eastdirection" />
     </exit>
   </object>
   <verb>
