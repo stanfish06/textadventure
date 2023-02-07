@@ -42,13 +42,13 @@
           list add (response, CommandLink("Ask Bartender about yourself?", "Who am I...?"))
           DisplayList (response, true)
         ]]></item>
-        <item key="treasure information nelport"><![CDATA[
-          msg ("You attempt to tell the Bartender about Nelport")
+        <item key="treasure information nelfport"><![CDATA[
+          msg ("You attempt to tell the Bartender about Nelfport")
           PrintCentered ("Gut : ...")
           PrintCentered ("Body : ...")
-          PrintCentered ("Logic : ... We don't know anything about Nelport")
-          msg ("You don't really know much about Nelport....")
-          PrintCentered ("Logic : Hey, Main Brain Cell here. How about we < ASK > about the < Treasure > in < Nelport > for more < Information >  ")
+          PrintCentered ("Logic : ... We don't know anything about Nelfport")
+          msg ("You don't really know much about Nelfport....")
+          PrintCentered ("Logic : Hey, Main Brain Cell here. How about we < ASK > about the < Treasure > in < Nelfport > for more < Information >  ")
           msg ("Good idea.")
         ]]></item>
         <item key="accepting the request">
@@ -58,7 +58,7 @@
           msg ("\"Report back to me when you're done!\"")
         </item>
         <item key="declining the request"><![CDATA[
-          msg ("You decline the request that will supply you < Information > on < Nelport > ")
+          msg ("You decline the request that will supply you < Information > on < Nelfport > ")
           msg ("The Bartender stares at you in silence...")
           PrintCentered ("Logic : ... Guess we aren't progressing the game...")
           msg ("The Bartender sighs")
@@ -79,7 +79,7 @@
             msg ("\"This should do the trick for now.\"")
             msg ("\"Thanks for the help.\"")
             AddToInventory (Bartender Approval)
-            PrintCentered ("Logic : We can probably now < ASK > about Nelport and recieve information.")
+            PrintCentered ("Logic : We can probably now < ASK > about Nelfport and recieve information.")
           }
           else if (Got(Proof of Request_Kick)) {
             msg ("The Bartender is greatly concerned!")
@@ -100,7 +100,7 @@
             PrintCentered ("Logic : Now we're prepared if we ever lose that badly again!")
             msg ("\"Thanks for the help though. At least trying to.\"")
             AddToInventory (Bartender Approval)
-            PrintCentered ("Logic : Although it didn't go as we planned it, we can probably now < ASK > about Nelport and gain information from it. We did sacrifice our beautiful face for it...")
+            PrintCentered ("Logic : Although it didn't go as we planned it, we can probably now < ASK > about Nelfport and gain information from it. We did sacrifice our beautiful face for it...")
           }
           else if (Got(Proof of Request_Knife)) {
             msg ("The Bartender is horried! ")
@@ -116,9 +116,9 @@
             msg ("\"Well shucks. Thank you. That really... really made my day.\"")
             AddToInventory (Bartender Approval)
             msg ("The Bartender is seeing you in a new light!")
-            PrintCentered ("Logic : ... Nothing about this makes sense, but let's move past this. We can probably now < ASK > about Nelport, and gain actual information from this SICK-")
+            PrintCentered ("Logic : ... Nothing about this makes sense, but let's move past this. We can probably now < ASK > about Nelfport, and gain actual information from this SICK-")
             PrintCentered ("Guts : HEY")
-            PrintCentered ("Logic : My apologies. But yeah, < ASK > about Nelport so we can get information and go.")
+            PrintCentered ("Logic : My apologies. But yeah, < ASK > about Nelfport so we can get information and go.")
           }
           else {
             msg ("The Bartender is confused")
@@ -134,10 +134,10 @@
           AddToInventory (Glass of Water)
         ]]></item>
         <item key="last night">
-          msg ("\"Last night? Well a rumor had gone around that there was something in Nelport. So many adventures came here to wish each other good luck, and it turned into a... very lively party.\"")
+          msg ("\"Last night? Well a rumor had gone around that there was something in Nelfport. So many adventures came here to wish each other good luck, and it turned into a... very lively party.\"")
         </item>
         <item key="the myth">
-          msg ("\"The myth? It's less a myth and more a rumor really. But apparently, word on the street is that some legendary pirate had left his greatest treasures somewhere in Nelport before he was executed...\"")
+          msg ("\"The myth? It's less a myth and more a rumor really. But apparently, word on the street is that some legendary pirate had left his greatest treasures somewhere in Nelfport before he was executed...\"")
         </item>
         <item key="himself">
           msg ("You ask the Bartender about who he is...")
@@ -171,23 +171,23 @@
           PrintCentered ("Gut : Let's just move past this. Please.")
           PrintCentered ("Body : Never cook again.")
         </item>
-        <item key="treasure information Nelport "><![CDATA[
+        <item key="treasure information Nelfport "><![CDATA[
           if (Got(Bartender Approval)) {
             msg ("The Bartender approves of you after completing his request.")
             msg ("\"Now, I don't have the FULL story, but from what I've heard...\"")
-            msg ("\"Nelport, the port city, attracts many merchants. It's basically a booming industrial city. But, rumor has it, that there's a gold mine of treasure hidden in some place at Nelport that hasn't been found yet.\"")
-            msg ("\"Nelport is a good days journey from here, so if you want to catch up to the already set-out adventures, you should probably look for a carriage.\"")
-            msg ("\"Since you've been so helpful, I'll let you in on some more information. The citizens of Nelport probably have other vital pieces of information that you could use to find the treasure. Of course, all good things come with a price. Though if you lend a helping hand, I don't see why they wouldn't help you in return.\"")
+            msg ("\"Nelfport, the port city, attracts many merchants. It's basically a booming industrial city. But, rumor has it, that there's a gold mine of treasure hidden in some place at Nelfport that hasn't been found yet.\"")
+            msg ("\"Nelfport is a good days journey from here, so if you want to catch up to the already set-out adventures, you should probably look for a carriage.\"")
+            msg ("\"Since you've been so helpful, I'll let you in on some more information. The citizens of Nelfport probably have other vital pieces of information that you could use to find the treasure. Of course, all good things come with a price. Though if you lend a helping hand, I don't see why they wouldn't help you in return.\"")
             msg ("You attempt to digest the information...")
             PrintCentered ("Logic : Digest what? This information won't dissappear. And didn't we already know this already?")
             PrintCentered ("Logic : Let's just head on home.")
-            UnlockExit (Exit to Street)
+            UnlockExit (Bar to Village Path)
             PrintCentered ("Logic : What are you waiting for...? Let's leave already < out > that way.")
           }
           else {
-            msg ("You attempt to gain more information about the treasure in Nelport")
+            msg ("You attempt to gain more information about the treasure in Nelfport")
             msg ("The Bartender chuckles")
-            msg ("\"I'll gladly tell you more about Nelport.\"")
+            msg ("\"I'll gladly tell you more about Nelfport.\"")
             msg ("\"If you do a simple request for me.\"")
             PrintCentered ("Logic : You should probably <ASK > about this < REQUEST >")
           }
@@ -374,7 +374,12 @@
         ]]></item>
       </useon>
     </object>
-	<object name="player">
+    <exit name="Bar to Village Path" alias="out" to="Village Path">
+      <inherit name="outdirection" />
+      <visible />
+      <locked />
+    </exit>
+    <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
       <feature_container />
@@ -454,6 +459,11 @@
       <object name="kick">
         <inherit name="editor_object" />
         <feature_usegive />
+        <look><![CDATA[You look at your hands...<br/><br/>Body (Sight) : They're legs? Your legs? You as in the player, of course, because there was no one in this husk of a body before the game started...<br/><br/>Logic : ... What?<br/><br/>Gut (Anxious) : Using legs primarily in combat can leave you open. Especially considering we aren't trained professionals in any sort of fighting. If we aren't careful, we could greatly injure our feet...<br/><br/>Logic : That's... honestly reasonable.]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+          <value>Use</value>
+        </inventoryverbs>
         <selfuseon type="scriptdictionary">
           <item key="chair"><![CDATA[
             msg ("You attempt to kick the chair out from under the sleeping giant.")
@@ -478,16 +488,8 @@
             PrintCentered ("Logic : ... Yeah sure. Let's just <Report > back to the Bartender and < tell > him what happened...")
           ]]></item>
         </selfuseon>
-        <look><![CDATA[You look at your hands...<br/><br/>Body (Sight) : They're legs? Your legs? You as in the player, of course, because there was no one in this husk of a body before the game started...<br/><br/>Logic : ... What?<br/><br/>Gut (Anxious) : Using legs primarily in combat can leave you open. Especially considering we aren't trained professionals in any sort of fighting. If we aren't careful, we could greatly injure our feet...<br/><br/>Logic : That's... honestly reasonable.]]></look>
-        <inventoryverbs type="stringlist">
-          <value>Look at</value>
-          <value>Use</value>
-        </inventoryverbs>
       </object>
     </object>
-    <exit alias="out" to="Village Path">
-      <inherit name="outdirection" />
-    </exit>
   </object>
   <verb>
     <property>messwith</property>
@@ -497,7 +499,7 @@
   <object name="Home">
     <inherit name="editor_room" />
     <firstenter type="script">
-      msg ("As you wake up, you begin to set out on the travels you've been preparing for. It's been months in the making to get all the paperwork to get around, but your carriage is still broken outside. It's time you fixed it, for how else will you get to Nelfport?")
+      msg ("Time to set out on the travels you've been preparing for. It's been months in the making to get all the paperwork to get around, but your carriage is still broken outside. It's time you fixed it, for how else will you get to Nelfport?")
     </firstenter>
     <object name="Kitchen Table">
       <inherit name="editor_object" />
@@ -999,52 +1001,52 @@
           }
         }
       ]]></speak>
-      <object name="Chest">
-        <inherit name="editor_object" />
-        <inherit name="container_closed" />
-        <inherit name="container_lockable" />
-        <look type="string"></look>
-        <feature_container />
-        <close type="boolean">false</close>
-        <visible type="boolean">false</visible>
-        <hidechildren />
-        <listchildren />
-        <keycount type="int">1</keycount>
-        <nokeymessage>You do not have the Diving Helmet.</nokeymessage>
-        <key type="object">Diving Helmet</key>
-        <onopen type="script">
-        </onopen>
-        <object name="Map">
-          <inherit name="editor_object" />
-          <alias>Map</alias>
-          <look>You see a map with a red X marked in the middle of the ocean.</look>
-          <take />
-          <visible />
-          <ontake type="script">
-            AddToInventory (Map)
-            if (Got(Diving Helmet)) {
-              create exit ("Treasure", Lighthouse, Shipwreck)
-            }
-            else {
-              msg ("You are not ready to go to the Shipwreck yet. Try to find a diving helmet")
-            }
-          </ontake>
-        </object>
-        <object name="Key">
-          <inherit name="editor_object" />
-          <look>An old metal key. It might come in useful later</look>
-          <take />
-          <takemsg>You took the key</takemsg>
-          <visible />
-          <ontake type="script">
-            AddToInventory (Key)
-          </ontake>
-        </object>
-      </object>
     </object>
     <exit alias="out" to="Bridge to the lighthouse">
       <inherit name="outdirection" />
     </exit>
+    <object name="Chest">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <inherit name="container_lockable" />
+      <look type="string"></look>
+      <feature_container />
+      <close type="boolean">false</close>
+      <visible type="boolean">false</visible>
+      <hidechildren />
+      <listchildren />
+      <keycount type="int">1</keycount>
+      <nokeymessage>You do not have the Diving Helmet.</nokeymessage>
+      <key type="object">Diving Helmet</key>
+      <onopen type="script">
+      </onopen>
+      <object name="Map">
+        <inherit name="editor_object" />
+        <alias>Map</alias>
+        <look>You see a map with a red X marked in the middle of the ocean.</look>
+        <take />
+        <visible />
+        <ontake type="script">
+          AddToInventory (Map)
+          if (Got(Diving Helmet)) {
+            create exit ("Treasure", Lighthouse, Shipwreck)
+          }
+          else {
+            msg ("You are not ready to go to the Shipwreck yet. Try to find a diving helmet")
+          }
+        </ontake>
+      </object>
+      <object name="Key">
+        <inherit name="editor_object" />
+        <look>An old metal key. It might come in useful later</look>
+        <take />
+        <takemsg>You took the key</takemsg>
+        <visible />
+        <ontake type="script">
+          AddToInventory (Key)
+        </ontake>
+      </object>
+    </object>
   </object>
   <object name="Industrial area">
     <inherit name="editor_room" />
@@ -2703,17 +2705,18 @@
       </exit>
       <object name="Treasure">
         <inherit name="editor_object" />
-        <inherit name="container_closed" />
         <inherit name="container_lockable" />
+        <inherit name="container_open" />
         <feature_container />
         <keycount type="int">1</keycount>
-        <autounlock type="boolean">false</autounlock>
+        <autounlock />
         <lockmessage>Locked. you need a key</lockmessage>
-        <visible type="boolean">false</visible>
+        <visible />
         <close type="boolean">false</close>
+        <isopen type="boolean">false</isopen>
         <key type="object">Key</key>
         <onunlock type="script">
-          PrintCentered ("Congradulations! You found the treasure.")
+          PrintCentered ("Congratulations! You found the treasure.")
           msg ("After successfully finding the treasure, Kade Bellman loads all the treasue into his carriage and returns to Hymia, a successful hunter.")
           finish
         </onunlock>
