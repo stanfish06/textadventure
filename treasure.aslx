@@ -15,6 +15,380 @@
     <mapexitwidth type="int">3</mapexitwidth>
     <bordercolour>Black</bordercolour>
   </game>
+  <object name="Bar">
+    <inherit name="editor_room" />
+    <isroom />
+    <descprefix>You regain your bearings to what appears to be the inside of a bar.</descprefix>
+    <description><![CDATA[The bar you're currently located appears to be in the process of being cleaned. <br/>Judging from the amount of empty glass mugs in the back, scattered across the floor, and the distinct smell in the air, it appears a huge party had occured last night. <br/>Maybe that's why you can't seem to remember anything before then?<br/>The Bartender has noticed your awake, and seems relieved you woke up.<br/><br/>Gut (Feeling) : He appears to be thankful he doesn't have to dispose of another body.<br/>Logic : Try < Speaking > to him. ]]></description>
+    <object name="Bartender">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <look><![CDATA[Body (Sight) : A tall, fit man, with a gentle and kind personality. He is, after all, the only person who payed attention to you when you woke up, and immediately began making sure you were alright. <br/>Gut (Feeling) : This charming bartender is no stranger, swapping stories with travelers, merchants, and adventures alike. He greatly values the experiences of other people, because he doesn't really leave the bar or the island himself. Rather, he gave up his ambitions to set down this safe haven in the first place. <br/>Logic : If you want to know more about anything, he probably is your best place to start. ]]></look>
+      <speak type="script">
+        msg ("Oh, good morning! Seems you've come to? Would you like some water? I know last night was a hell of a party...\"")
+        PrintCentered ("Greet him back?")
+      </speak>
+      <tell type="scriptdictionary">
+        <item key="morning hello hi Hello Hi Morning"><![CDATA[
+          msg ("You greet the Bartender.<br/>He smiles back at you.<br/>")
+          msg ("\"Man, it really was a party in here last night. Who would've that this many people came just to see if the myth was true...\"")
+          PrintCentered ("Logic : It appears he's referring to something important...<br/>")
+          PrintCentered ("Logic : But your brain is still recovering. Instead of dissecting vague sentences, we'll be faster cutting straight to the point.<br/>")
+          response = NewList()
+          list add (response, CommandLink("Ask Bartender about last night?", "Last night...?"))
+          list add (response, CommandLink("Ask Bartender about the myth?", "The myth...?"))
+          list add (response, CommandLink("Ask Bartender about himself?", "Who are you...?"))
+          list add (response, CommandLink("Ask Bartender about the bar?", "Where is this...?"))
+          list add (response, CommandLink("Ask Bartender about yourself?", "Who am I...?"))
+          DisplayList (response, true)
+        ]]></item>
+        <item key="treasure information nelport"><![CDATA[
+          msg ("You attempt to tell the Bartender about Nelport")
+          PrintCentered ("Gut : ...")
+          PrintCentered ("Body : ...")
+          PrintCentered ("Logic : ... We don't know anything about Nelport")
+          msg ("You don't really know much about Nelport....")
+          PrintCentered ("Logic : Hey, Main Brain Cell here. How about we < ASK > about the < Treasure > in < Nelport > for more < Information >  ")
+          msg ("Good idea.")
+        ]]></item>
+        <item key="accepting the request">
+          msg ("The Bartender smiles at you")
+          msg ("\"Great. You have my approval to do what you see fit in order to get him to leave.\"")
+          AddToInventory (Sleeping Hollow Seal of Approval)
+          msg ("\"Report back to me when you're done!\"")
+        </item>
+        <item key="declining the request"><![CDATA[
+          msg ("You decline the request that will supply you < Information > on < Nelport > ")
+          msg ("The Bartender stares at you in silence...")
+          PrintCentered ("Logic : ... Guess we aren't progressing the game...")
+          msg ("The Bartender sighs")
+          msg ("\"Alright then... My offer still stands.\"")
+        ]]></item>
+        <item key="report Report request giant customer "><![CDATA[
+          if (Got(Proof of Request_Fist)) {
+            msg ("The Bartender is amazed!")
+            msg ("\"Woah! You really let him have it didn't you.\"")
+            msg ("\"But are you alright?\"")
+            PrintCentered ("Body (Sight) : It appears the Bartender is showing concern. Could he be seeing the cause of what the searing pain we've been feeling lately is?")
+            PrintCentered ("Logic : Wait why are we in pain?")
+            msg ("You look down at your hands and see that multiple bruises and cuts have busted open at your knuckles. Seems wailing on that dude's face caused you to exert yourself.")
+            msg ("The Bartender expresses concern, but is relieved that you appear to be alright.")
+            msg ("\"I don't know what to say about your lack of expression to that, but I do know what I can do for it.\"<br/>\"May I\"?")
+            msg ("The Bartender gently takes your hands before wrapping them in bandages. ")
+            PrintCentered ("You have acquired : Hand Wrappings")
+            msg ("\"This should do the trick for now.\"")
+            msg ("\"Thanks for the help.\"")
+            AddToInventory (Bartender Approval)
+            PrintCentered ("Logic : We can probably now < ASK > about Nelport and recieve information.")
+          }
+          else if (Got(Proof of Request_Kick)) {
+            msg ("The Bartender is greatly concerned!")
+            msg ("\"When I said to take care of him, I didn't mean to go get your face smashed in!\"")
+            PrintCentered ("Guts (Pride) : We were trying to help. And we didn't get our face smashed in.")
+            PrintCentered ("Logic : Yeah, we just got hit so hard we proceeded to black out.")
+            PrintCentered ("Guts (Head Empty) : Exactly!")
+            PrintCentered ("Logic : ...")
+            msg ("The Bartender is glad you didn't suffer any life-lasting damage.")
+            msg ("\"Hold on, I got just the thing...\"")
+            msg ("The Bartender rummages through the cabinets behind him, and appears to have gotten what he was looking for.")
+            msg ("\"Hold still please..\"")
+            msg ("The Bartender cradles your face softly before applying bandages and ointments across the bruises and swells that have sprouted from the fight-")
+            PrintCentered ("Logic : Can you even call that a fight? We got wrecked.")
+            msg ("One-sided onslaught.")
+            msg ("\"This is the best I can do for now. Take this though, in case they come undone.\"")
+            PrintCentered ("You have recieved Basic First Aid Kit")
+            PrintCentered ("Logic : Now we're prepared if we ever lose that badly again!")
+            msg ("\"Thanks for the help though. At least trying to.\"")
+            AddToInventory (Bartender Approval)
+            PrintCentered ("Logic : Although it didn't go as we planned it, we can probably now < ASK > about Nelport and gain information from it. We did sacrifice our beautiful face for it...")
+          }
+          else if (Got(Proof of Request_Knife)) {
+            msg ("The Bartender is horried! ")
+            msg ("Yet... weirdly charmed?")
+            PrintCentered ("Logic : ...")
+            PrintCentered ("Logic : I")
+            PrintCentered ("Logic : REFUS-")
+            msg ("\"That's... That's just... Wow...\"")
+            msg ("\"You did that...? For me...?\"")
+            PrintCentered ("Logic : No it was for informatio-")
+            PrintCentered ("Body (Charm) : Yes")
+            msg ("You confirm that you did it because he was annoying the Bartender")
+            msg ("\"Well shucks. Thank you. That really... really made my day.\"")
+            AddToInventory (Bartender Approval)
+            msg ("The Bartender is seeing you in a new light!")
+            PrintCentered ("Logic : ... Nothing about this makes sense, but let's move past this. We can probably now < ASK > about Nelport, and gain actual information from this SICK-")
+            PrintCentered ("Guts : HEY")
+            PrintCentered ("Logic : My apologies. But yeah, < ASK > about Nelport so we can get information and go.")
+          }
+          else {
+            msg ("The Bartender is confused")
+            msg ("\"What are you reporting...? He's still here.\"")
+            PrintCentered ("Logic : We should probably come back after dealing with the guy first.")
+          }
+        ]]></item>
+      </tell>
+      <ask type="scriptdictionary">
+        <item key="water Water "><![CDATA[
+          msg ("You ask the Bartender for a glass of water.<br/>He hands you one.")
+          PrintCentered ("The Player has Recieved : Glass of Water")
+          AddToInventory (Glass of Water)
+        ]]></item>
+        <item key="last night">
+          msg ("\"Last night? Well a rumor had gone around that there was something in Nelport. So many adventures came here to wish each other good luck, and it turned into a... very lively party.\"")
+        </item>
+        <item key="the myth">
+          msg ("\"The myth? It's less a myth and more a rumor really. But apparently, word on the street is that some legendary pirate had left his greatest treasures somewhere in Nelport before he was executed...\"")
+        </item>
+        <item key="himself">
+          msg ("You ask the Bartender about who he is...")
+          msg ("\"I'm a Bartender\"")
+          PrintCentered ("Logic : It's in the name.")
+          PrintCentered ("Body : We have eyes. Let's use them.")
+          msg ("\"But in all seriousness,  I am THE Bartender for the Sleeping Hollow.\"")
+          msg ("\"To you however, we're strangers.\"")
+        </item>
+        <item key="the bar"><![CDATA[
+          msg ("You ask the Bartender about the Bar...")
+          msg ("The Bartender looks confused.<br/>His eye color beings to brighten...")
+          msg ("\"You... You don't know where you are...?\"")
+          msg ("\"Wait... Now that I think about it...\"<br/>")
+          msg ("The Bartender looks around the room.<br/>As he does so, he begins to turn pale.<br/>His searches get more frantic...")
+          msg ("\"Where is this place? Who are you? Why am I here? I don't recall-\"")
+          msg ("The Bartender looks up at you.<br/>\"Who am I?\"")
+          msg ("The Bartender shivers, and his eyes dull back to its usual color.<br/>\"Just joking with you.\"<br/>The Bartender regurgitates : <br/>")
+          PrintCentered ("\"The Sleeping Hollow, or the bar you, the player, finds themselves to once you've regain your bearings. There isn't really much here, it's a cozy setting, filled with others who are also knocked out unconscious, whether from enjoying the night before or from drowning in their sorrows.\"<br/><br/>\"Not that you would know anything about that.\"")
+          msg ("The Bartender stops speaking...<br/>Seems that's all he has to say about the Bar.")
+          PrintCentered ("Logic : So... We're just going to go past that...?")
+          PrintCentered ("Gut Feeling : Yes. Yes we are.")
+        ]]></item>
+        <item key="yourself">
+          msg ("You ask the Bartender about yourself.")
+          msg ("\"How am I supposed to know about you?\"")
+          PrintCentered ("Logic : ...")
+          PrintCentered ("Body : ...")
+          PrintCentered ("Gut : ...")
+          PrintCentered ("Logic : Alright in my defe-")
+          PrintCentered ("Gut : Let's just move past this. Please.")
+          PrintCentered ("Body : Never cook again.")
+        </item>
+        <item key="treasure information Nelport "><![CDATA[
+          if (Got(Bartender Approval)) {
+            msg ("The Bartender approves of you after completing his request.")
+            msg ("\"Now, I don't have the FULL story, but from what I've heard...\"")
+            msg ("\"Nelport, the port city, attracts many merchants. It's basically a booming industrial city. But, rumor has it, that there's a gold mine of treasure hidden in some place at Nelport that hasn't been found yet.\"")
+            msg ("\"Nelport is a good days journey from here, so if you want to catch up to the already set-out adventures, you should probably look for a carriage.\"")
+            msg ("\"Since you've been so helpful, I'll let you in on some more information. The citizens of Nelport probably have other vital pieces of information that you could use to find the treasure. Of course, all good things come with a price. Though if you lend a helping hand, I don't see why they wouldn't help you in return.\"")
+            msg ("You attempt to digest the information...")
+            PrintCentered ("Logic : Digest what? This information won't dissappear. And didn't we already know this already?")
+            PrintCentered ("Logic : Let's just head on home.")
+            UnlockExit (Exit to Street)
+            PrintCentered ("Logic : What are you waiting for...? Let's leave already < out > that way.")
+          }
+          else {
+            msg ("You attempt to gain more information about the treasure in Nelport")
+            msg ("The Bartender chuckles")
+            msg ("\"I'll gladly tell you more about Nelport.\"")
+            msg ("\"If you do a simple request for me.\"")
+            PrintCentered ("Logic : You should probably <ASK > about this < REQUEST >")
+          }
+        ]]></item>
+        <item key="request"><![CDATA[
+          msg ("You ask the Bartender about the request.")
+          msg ("\"Don't worry its nothing major.\"")
+          msg ("\"Just recently, a < Rowdy Customer > has been disrupting my business, making a scene that causes potential returning customers from returning again. The fights he starts always leaves someone broken beyond repair, not to mention the expenses to repair the Bar afterwards...\"")
+          msg ("The Bartender sighs...")
+          msg ("\"It'll be great if there was SOMEONE willing to knock him down a peg or two.\"")
+          msg ("\"Or six feet under if you have to...\"")
+          msg ("The Bartender chuckles nervously. ")
+          msg ("\"Sorry... Bad joke?\"")
+          PrintCentered ("Logic : It appears he just made a joke about killing someone")
+          PrintCentered ("Gut (Intrusive) : I like the way he thinks...")
+          PrintCentered ("Logic : .... Murder aside, we do need < Information >. We might as well accept the request.")
+          response_3 = NewList()
+          list add (response_3, CommandLink("Tell Bartender about accepting the request", "Accept?"))
+          list add (response_3, CommandLink("Tell Bartender about decling the request", "Decline?"))
+          DisplayList (response_3, false)
+        ]]></item>
+      </ask>
+      <object name="Glass of Water">
+        <inherit name="editor_object" />
+        <inherit name="edible" />
+        <drop type="boolean">false</drop>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+          <value>Drink</value>
+        </inventoryverbs>
+        <attr name="feature_edible" type="boolean">false</attr>
+        <feature_usegive />
+        <eatmsg>You drank the glass of water... You feel refreshed!</eatmsg>
+        <displayverbs type="stringlist">
+          <value>Look at</value>
+          <value>Take</value>
+          <value>Drink</value>
+        </displayverbs>
+        <useindividualverblist type="boolean">false</useindividualverblist>
+        <usestandardverblist />
+        <look><![CDATA[It's a glass of water. As such, you can't really take it out of the Bar, since it isn't yours. <br/>And no, they don't offer take-out boxes.<br/><br/>Logic : ... Why would a take-out box work for a glass of water?]]></look>
+        <use type="script"><![CDATA[
+          msg ("You drink the glass of water...<br/>You feel refreshed!")
+          PrintCentered ("Body : Good ol H20...")
+          PrintCentered ("You had the Bartender the empty glass")
+          RemoveObject (Glass of Water)
+        ]]></use>
+        <drink type="script"><![CDATA[
+          msg ("You drink the glass of water...<br/>You feel refreshed!")
+          PrintCentered ("Body (Self) : Good ol H20...")
+          PrintCentered ("You had the Bartender the empty glass")
+          RemoveObject (Glass of Water)
+        ]]></drink>
+      </object>
+      <object name="Sleeping Hollow Seal of Approval">
+        <inherit name="editor_object" />
+        <visible />
+        <look><![CDATA[It's the Bartender's Seal of Approval. With this, the actions you take while inside the Bar represents the actions of the Bar itself. <br/>Logic : Naturally, something as important as this really shouldn't be in the hands of someone like us. But if he gave it to us, that means he must trust something about us.<br/>Guts : Exactly.<br/>Logic : Even if I am unable to understand what.<br/>Guts : ...<br/>Guts (Anxiety) : Thanks for the encouragement.]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+        </inventoryverbs>
+      </object>
+      <object name="Bartender Approval">
+        <inherit name="editor_object" />
+        <visible />
+        <look><![CDATA[It's a sign of the Bartender's Approval. <br/>By completing the request, he trusts you completely.]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+        </inventoryverbs>
+      </object>
+    </object>
+    <object name="Sleeping Rowdy Customer">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <useindividualverblist type="boolean">false</useindividualverblist>
+      <gender>he</gender>
+      <look><![CDATA[Body (Sight) : It's a heavy-set man. He looks like he's been in a few fights. His multitude of scars and thick muscles in his arms tells you he's won a few of them too. <br/>Logic : Safe to say, he isn't someone we should be messing with for no justified reason.]]></look>
+      <alt type="stringlist">
+        <value>giant</value>
+        <value>bully</value>
+        <value>customer</value>
+      </alt>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+      <messwith type="script">
+        msg ("You attempt to mess with the sleeping rowdy customer...")
+        if (Got(Sleeping Hollow Seal of Approval)) {
+          PrintCentered ("Logic : We have the green light...")
+          msg ("How will you attempt to do so?")
+          MakeObjectVisible (chair)
+          mess = NewList()
+          list add (mess, CommandLink("Use kick on chair", "Kick the chair underneath him?"))
+          list add (mess, CommandLink("Use fist on Sleeping Rowdy Customer", "Sleeper punch him?"))
+          list add (mess, CommandLink("Use knife on Sleeping Rowdy Customer", "Where are the knives...?"))
+          DisplayList (mess, true)
+        }
+        else {
+          PrintCentered ("Logic : We have no good reason to do that. Leave him alone.")
+          msg ("Because you're a good person, you let sleeping dogs lie. ")
+        }
+      </messwith>
+      <object name="Proof of Request">
+        <inherit name="editor_object" />
+        <visible type="boolean">false</visible>
+        <look><![CDATA[You got the job done.<br/><br/>Logic : But what's the proof.<br/><br/><b> YOU GOT THE JOB DONE <b>]]></look>
+      </object>
+      <object name="Bloody Knife">
+        <inherit name="editor_object" />
+        <visible type="boolean">false</visible>
+        <look><![CDATA[Where are the knives?<br/><br/>R i g h t        H e r e<br/><br/>Body (Self) : It's a knife. A real, geniune knife. The cold metal sears against your warm palm. Palm only made warm due to the crimson blood that flows beneath. Perhaps each, and every individual cell is aware that they're holding in their hand a tool capable of ending their flow as a whole. And not only their flow, but the flow of others. A knife is a tool for cutting, whether that be vines, fruit, or even human lifespan, short. <br/><br/>Logic : A knife, like all tools of Man, only does what it is told. At the end of the day, the tool is not blamed, the operator is. You best be sure to give it good instructions.<br/><br/>Gut (Feeling) : A knife is not a weapon, a knife is not a toy. Like all things, a knife is a tool. Is a knife evil? Is that even a question? Do you sin by cutting a fish to share with your family? Do you sin when removing weeds from the garden you struggled to grow? No, a knife is not evil. Only the wielder is capable of being "Evil". <br/><br/>Seems you've proven this already.<br/><br/>It's a knife, stained with blood that will never wash away... <b>Good job.<b> <br/>]]></look>
+        <drop type="script">
+          msg ("You attempt to drop the Bloody Knife...")
+          PrintCentered ("Guts (Cold) : You can't run from your guilt")
+          msg ("You pick up the Bloody Knife....")
+          PrintCentered ("Guts (Cold) : Who knows... Maybe you'll have to use it again. ")
+          PrintCentered ("Logic : Or maybe you'll use it on another innocent person. All for the sake of your goals, right?")
+          AddToInventory (Bloody Knife)
+        </drop>
+      </object>
+      <object name="Proof of Request_Fist">
+        <inherit name="editor_object" />
+        <visible />
+        <scenery />
+        <look><![CDATA[You got the job done.<br/><br/>Body (Hands) : Our fists are screaming in agony.<br/><br/>Guts (Relief) : Who knew people made good punching bags.<br/><br/>Logic : ...? <br/><br/>Body (Hands) : We should get our hands checked out. It hurts. A lot.<br/><br/>Logic : We should report back to the Bartender then and stop looking at object descriptions.]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+        </inventoryverbs>
+      </object>
+      <object name="Proof of Request_Kick">
+        <inherit name="editor_object" />
+        <visible />
+        <look><![CDATA[You got the job done.<br/><br/>Body (Self) : Everywhere.... hurts...<br/><br/>Guts (Animosty) : We really let him do that to us?!<br/><br/>Logic : ...? What were we supposed to do? We were knocked out immediately.<br/><br/>Guts (Grudge) : Let's find him again and get vengence.<br/><br/>Logic : We should report back to the Bartender then and stop looking at object descriptions.<br/><br/>Body (Self) : <b> EVERYWHERE.... HURTS.... <b><br/><br/>]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+        </inventoryverbs>
+      </object>
+      <object name="Proof of Request_Knife">
+        <inherit name="editor_object" />
+        <visible />
+        <look><![CDATA[You got the job done.<br/><br/>Logic : ...<br/><br/>Logic : ...<br/><br/>Logic : ...<br/><br/>Logic : <b> Monster. <b>]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+        </inventoryverbs>
+      </object>
+    </object>
+    <object name="Sleeping Hunter">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <look><![CDATA[Body (Sight) : It's a slim, yet althetically built hunter. Green cap, arrow quiver, hunting knife, everything from the top to the bottom screams this man is a Hunter. Think like, RPG Rangers. You know, from Final Fantasy?<br/><br/>Logic : ...? What?<br/><br/>Body (Sight) : References aside, he appears to be extremely exhausted. I don't think he'd even noticed if anyone moved him. Or his things.<br/><br/>Logic : We should probably leave him alone. ]]></look>
+    </object>
+    <object name="chair">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <feature_usegive />
+      <use type="boolean">false</use>
+      <alt type="stringlist">
+        <value>Chair</value>
+        <value>Seat</value>
+        <value>seat</value>
+      </alt>
+      <useon type="scriptdictionary">
+        <item key="kick"><![CDATA[
+          msg ("You attempt to kick the chair out from under the sleeping giant.")
+          msg ("The chair does not move. In fact, the area on your foot received recoil. ")
+          PrintCentered ("Body (Foot) : HOLY- WAS THE CHAIR MADE OF CONCRETE?")
+          PrintCentered ("Body (Foot) : WAS THE CHAIR MADE OF CONCRETE?!")
+          PrintCentered ("Logic : Must've skipped leg day. ")
+          PrintCentered ("Body (Foot) : THIS PAIN. DEAR GOD.")
+          PrintCentered ("Logic : ... Hey I think he woke up now.")
+          msg ("As you clutch your foot, which is probably shattered in 24 different places-")
+          PrintCentered ("Logic : Grow up.")
+          msg ("You see that the giant has been roused from his sleep.")
+          msg ("The two brain cells in his head sees you clutching your foot in pain, and him now awake, and immediately connects the dots. ")
+          msg ("You could barely react to the fist that slams into your face...")
+          PrintCentered ("Logic : ...")
+          msg ("When the world stops spinning, you realize that he's left. It is now night time.")
+          AddToInventory (Proof of Request_Kick)
+          PrintCentered ("Logic : Did you really have a fade-to-black cutscene after getting hit once? ")
+          PrintCentered ("Guts (Arrogance) : Me personally, I would never allow that disrespect. ")
+          PrintCentered ("Logic : ... The Bartender definetly saw that....")
+          PrintCentered ("Guts (Head Empty) : Well he did leave, so we did what he asked.")
+          PrintCentered ("Logic : ... Yeah sure. Let's just < report > back to the Bartender and < tell > him what happened...")
+        ]]></item>
+      </useon>
+    </object>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <feature_container />
+      <attr name="money_temp" type="int">0</attr>
+    </object>
+    <exit alias="out" to="Village Path">
+      <inherit name="outdirection" />
+    </exit>
+  </object>
+  <verb>
+    <property>messwith</property>
+    <pattern>mess with</pattern>
+    <defaultexpression>"You can't mess with " + object.article + "."</defaultexpression>
+  </verb>
   <object name="Home">
     <inherit name="editor_room" />
     <firstenter type="script">
@@ -268,6 +642,9 @@
     <exit name="Road to Village outside Nelfport" alias="north" to="Small village outside Nelfport">
       <inherit name="northdirection" />
       <visible type="boolean">false</visible>
+    </exit>
+    <exit alias="west" to="Bar">
+      <inherit name="westdirection" />
     </exit>
   </object>
   <object name="Small village outside Nelfport">
@@ -2213,12 +2590,6 @@
     <exit alias="south" to="Ocean">
       <inherit name="southdirection" />
     </exit>
-    <object name="player">
-      <inherit name="editor_object" />
-      <inherit name="editor_player" />
-      <feature_container />
-      <attr name="money_temp" type="int">0</attr>
-    </object>
     <object name="Ocean Treasure">
       <inherit name="editor_room" />
       <alias>Ocean</alias>
