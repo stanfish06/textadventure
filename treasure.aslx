@@ -374,11 +374,116 @@
         ]]></item>
       </useon>
     </object>
-    <object name="player">
+	<object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
       <feature_container />
       <attr name="money_temp" type="int">0</attr>
+      <object name="fist">
+        <inherit name="editor_object" />
+        <look><![CDATA[You look at your hands...<br/><br/>Body (Sight) : They're hands? Your hands? You as in the player, of course, because there was no one in this husk of a body before the game started...<br/><br/>Logic : ... What?<br/><br/>Gut (Pride) : Real fights are fought with hands only. Nothing like a good brawl to get the blood pumping!]]></look>
+        <alt type="stringlist">
+          <value>fist</value>
+          <value>Fist</value>
+          <value>hand</value>
+          <value>punch</value>
+        </alt>
+        <displayverbs type="stringlist">
+          <value>Look at</value>
+        </displayverbs>
+        <drop type="boolean">false</drop>
+        <take type="boolean">false</take>
+        <feature_usegive />
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+          <value>Use</value>
+        </inventoryverbs>
+        <selfuseon type="scriptdictionary">
+          <item key="Sleeping Rowdy Customer"><![CDATA[
+            msg ("You smash your fist into the sleeping giant!")
+            msg ("He goes down to the floor, but he appears to be stirring?")
+            PrintCentered ("Guts (Cold) : We might as well knock him out completely....")
+            PrintCentered ("Logic : ?!")
+            PrintCentered ("Guts : Just to knock him down a peg.")
+            msg ("You go down with him and contiune beating-")
+            msg ("Ahem.")
+            msg ("Sculpting his face into a masterpiece...")
+            PrintCentered ("Logic : ... You got it out of your system yet?")
+            msg ("You punch him one more time for good measure.")
+            AddToInventory (Proof of Request_Fist)
+            PrintCentered ("Logic : ... Alright. Now can we <Report > back to the Bartender and < tell > him what happened.")
+          ]]></item>
+        </selfuseon>
+      </object>
+      <object name="Knife">
+        <inherit name="editor_object" />
+        <look><![CDATA[ Where are the knives? <br/><br/>R i g h t        H e r e <br/><br/>Body (Self) : It's a knife. A real, geniune knife. The cold metal sears against your warm palm. Palm only made warm due to the crimson blood that flows beneath. Perhaps each, and every individual cell is aware that they're holding in their hand a tool capable of ending their flow as a whole. And not only their flow, but the flow of others. A knife is a tool for cutting, whether that be vines, fruit, or even human lifespan, short. <br/><br/>Gut (Feeling) : A knife, like all tools of Man, only does what it is told. At the end of the day, the tool is not blamed, the operator is. You best be sure to give it good instructions.<br/><br/>Logic : A knife is not a weapon, a knife is not a toy. Like all things, a knife is a tool. Is a knife evil? Is that even a question? Do you sin by cutting a fish to share with your family? Do you sin when removing weeds from the garden you struggled to grow? No, a knife is not evil. Only the wielder is capable of being "Evil". <br/><br/>It's a knife. <b>Nothing more. Nothing less. <b><br/><br/>]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+          <value>Use</value>
+        </inventoryverbs>
+        <drop type="boolean">false</drop>
+        <feature_usegive />
+        <alt type="stringlist">
+          <value>knife</value>
+          <value>sharp object</value>
+          <value>dagger</value>
+          <value>sword</value>
+        </alt>
+        <selfuseon type="scriptdictionary">
+          <item key="Sleeping Rowdy Customer"><![CDATA[
+            msg ("You slip out the knife from your pocket...")
+            PrintCentered ("Logic : Woah hold on. This escalated quickly. Why do you even have that??!")
+            PrintCentered ("Guts (Animosity) : This is justice. For the Bartender.")
+            msg ("You, who would do anything for achieving your goals, take the knife and run it through the sleeping Customer.")
+            RemoveObject (Knife)
+            AddToInventory (Bloody Knife)
+            MakeObjectVisible (Bloody Knife)
+            PrintCentered ("Guts (Cold) : Hope you have good dreams....")
+            PrintCentered ("Logic : ... It was a Rowdy Customer..")
+            PrintCentered ("Logic : in a BAR. ")
+            PrintCentered ("Guts (Cold) : Anything for the treasure...")
+            msg ("You make quick work for him. ")
+            AddToInventory (Proof of Request_Knife)
+            PrintCentered ("Body (Hands) : As much as we can try to wash it off, the reality of what we, no, You did will never go away. ")
+            PrintCentered ("Guts (Cold) : You don't feel guilty. After all, this was YOUR choice. ")
+            PrintCentered ("Logic : ... Let's just <Report > back to the Bartender and < tell > him what happened.")
+          ]]></item>
+        </selfuseon>
+      </object>
+      <object name="kick">
+        <inherit name="editor_object" />
+        <feature_usegive />
+        <selfuseon type="scriptdictionary">
+          <item key="chair"><![CDATA[
+            msg ("You attempt to kick the chair out from under the sleeping giant.")
+            msg ("The chair does not move. In fact, the area on your foot received recoil. ")
+            PrintCentered ("Body (Foot) : HOLY- WAS THE CHAIR MADE OF CONCRETE?")
+            PrintCentered ("Body (Foot) : WAS THE CHAIR MADE OF CONCRETE?!")
+            PrintCentered ("Logic : Must've skipped leg day. ")
+            PrintCentered ("Body (Foot) : THIS PAIN. DEAR GOD.")
+            PrintCentered ("Logic : ... Hey I think he woke up now.")
+            msg ("As you clutch your foot, which is probably shattered in 24 different places-")
+            PrintCentered ("Logic : Grow up.")
+            msg ("You see that the giant has been roused from his sleep.")
+            msg ("The two brain cells in his head sees you clutching your foot in pain, and him now awake, and immediately connects the dots. ")
+            msg ("You could barely react to the fist that slams into your face...")
+            PrintCentered ("Logic : ...")
+            msg ("When the world stops spinning, you realize that he's left. It is now night time.")
+            AddToInventory (Proof of Request_Kick)
+            PrintCentered ("Logic : Did you really have a fade-to-black cutscene after getting hit once? ")
+            PrintCentered ("Guts (Arrogance) : Me personally, I would never allow that disrespect. ")
+            PrintCentered ("Logic : ... The Bartender definetly saw that....")
+            PrintCentered ("Guts (Head Empty) : Well he did leave, so we did what he asked.")
+            PrintCentered ("Logic : ... Yeah sure. Let's just <Report > back to the Bartender and < tell > him what happened...")
+          ]]></item>
+        </selfuseon>
+        <look><![CDATA[You look at your hands...<br/><br/>Body (Sight) : They're legs? Your legs? You as in the player, of course, because there was no one in this husk of a body before the game started...<br/><br/>Logic : ... What?<br/><br/>Gut (Anxious) : Using legs primarily in combat can leave you open. Especially considering we aren't trained professionals in any sort of fighting. If we aren't careful, we could greatly injure our feet...<br/><br/>Logic : That's... honestly reasonable.]]></look>
+        <inventoryverbs type="stringlist">
+          <value>Look at</value>
+          <value>Use</value>
+        </inventoryverbs>
+      </object>
     </object>
     <exit alias="out" to="Village Path">
       <inherit name="outdirection" />
