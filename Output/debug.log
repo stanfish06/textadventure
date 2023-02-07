@@ -1,0 +1,18 @@
+[0206/212548:ERROR:renderer_main.cc(207)] Running without renderer sandbox
+[0206/212548:ERROR:cache_util_win.cc(20)] Unable to move the cache: 5
+[0206/212548:ERROR:cache_util.cc(132)] Unable to move cache folder C:\Users\andre\AppData\Local\Temp\GPUCache to C:\Users\andre\AppData\Local\Temp\old_GPUCache_000
+[0206/212548:ERROR:cache_creator.cc(132)] Unable to create cache
+[0206/212548:ERROR:shader_disk_cache.cc(588)] Shader Cache Creation failed: -2
+[0206/212553:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
+[0206/214414:ERROR:renderer_main.cc(207)] Running without renderer sandbox
+[0206/214414:ERROR:cache_util_win.cc(20)] Unable to move the cache: 5
+[0206/214414:ERROR:cache_util.cc(132)] Unable to move cache folder C:\Users\andre\AppData\Local\Temp\GPUCache to C:\Users\andre\AppData\Local\Temp\old_GPUCache_000
+[0206/214414:ERROR:cache_creator.cc(132)] Unable to create cache
+[0206/214414:ERROR:shader_disk_cache.cc(588)] Shader Cache Creation failed: -2
+[0206/214417:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
+[0206/214514:ERROR:renderer_main.cc(207)] Running without renderer sandbox
+[0206/214514:ERROR:cache_util_win.cc(20)] Unable to move the cache: 5
+[0206/214514:ERROR:cache_util.cc(132)] Unable to move cache folder C:\Users\andre\AppData\Local\Temp\GPUCache to C:\Users\andre\AppData\Local\Temp\old_GPUCache_000
+[0206/214514:ERROR:cache_creator.cc(132)] Unable to create cache
+[0206/214514:ERROR:shader_disk_cache.cc(588)] Shader Cache Creation failed: -2
+[0206/214917:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
