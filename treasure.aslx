@@ -527,11 +527,11 @@
         <visible type="boolean">false</visible>
         <hidechildren />
         <listchildren />
+        <keycount type="int">1</keycount>
+        <nokeymessage>You do not have the Diving Helmet.</nokeymessage>
+        <key type="object">Diving Helmet</key>
         <onopen type="script">
         </onopen>
-        <keycount type="int">1</keycount>
-        <key type="object">Diving Helmet</key>
-        <nokeymessage>You do not have the Diving Helmet.</nokeymessage>
         <object name="Map">
           <inherit name="editor_object" />
           <alias>Map</alias>
@@ -2238,7 +2238,7 @@
         <key type="object">Key</key>
         <onunlock type="script">
           PrintCentered ("Congradulations! You found the treasure.")
-          msg ("After successfully finding the treasure, Kade Bellman loads all the treasue into his carriage and returns to Hymia")
+          msg ("After successfully finding the treasure, Kade Bellman loads all the treasue into his carriage and returns to Hymia, a successful hunter.")
           finish
         </onunlock>
       </object>
